@@ -1,0 +1,19 @@
+/* Hero Section */
+.hero-section {
+    position: relative;
+    min-height: 60vh;
+    background: var(--background-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px;
+    overflow: hidden;
+}
+
+.hero-content {
+    max-width: 1000px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+} 

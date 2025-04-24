@@ -1,0 +1,238 @@
+/* ==================================================================================
+ * ⚠️ 경고: 이 파일은 현재 프로덕션에서 사용 중인 완성된 버전입니다!
+ * 🚫 직접 수정하지 마세요!
+ * 
+ * 최종 수정일: 2024-04-18
+ * 버전: 1.0.0
+ * 
+ * 헤더 스타일 수정이 필요한 경우:
+ * 1. 반드시 관리자에게 문의해주세요
+ * 2. 승인 후 새로운 파일을 생성하여 작업을 진행합니다
+ * 3. 테스트 완료 후 관리자 검토를 거쳐 적용됩니다
+ * ================================================================================== */
+
+/* 헤더 기본 변수 */
+:root {
+    --header-bg: #ffffff;
+    --header-text: #333333;
+    --purple-base: #6E45E2;
+    --purple-dark: #5B35D5;
+    --background-primary: #ffffff;
+    --border-color: rgba(65, 65, 65, 0.08);
+    --button-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    --button-hover-shadow: 0 4px 12px rgba(110, 69, 226, 0.15);
+    --nav-height: 80px;
+}
+
+/* 헤더 위치 고정 및 기본 스타일 */
+.site-header {
+    background-color: var(--header-bg);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: var(--nav-height);
+}
+
+/* 헤더로 가려지는 콘텐츠 보정 */
+body {
+    padding-top: var(--nav-height);
+}
+.admin-bar body {
+    padding-top: calc(var(--nav-height) + 32px); /* 워드프레스 툴바 높이까지 포함 */
+}
+
+
+@media screen and (max-width: 782px) {
+    .admin-bar body {
+        padding-top: calc(var(--nav-height) + 46px);
+    }
+}
+
+
+/* 헤더 내부 컨테이너 */
+.header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    gap: 20px;
+}
+
+/* 로고 */
+.site-branding {
+    display: flex;
+    align-items: center;
+}
+
+.custom-logo-link {
+    display: block;
+    line-height: 0;
+}
+
+.custom-logo {
+    max-height: 40px;
+    width: auto;
+}
+
+/* 네비게이션 */
+.main-navigation {
+    display: flex;
+    align-items: center;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 12px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+}
+
+.menu-item a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    height: 40px;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--header-text);
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--button-shadow);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.menu-item a:hover {
+    background: var(--purple-base);
+    color: #fff;
+    box-shadow: 0 0 20px var(--purple-glow);
+    border-color: var(--purple-base);
+}
+
+.current-menu-item a,
+.current_page_item a {
+    background: var(--purple-base);
+    color: white;
+    border-color: var(--purple-base);
+    box-shadow: 0 0 20px var(--purple-glow);
+}
+
+.current-menu-item a:hover,
+.current_page_item a:hover {
+    background: var(--purple-dark);
+    border-color: var(--purple-dark);
+}
+
+/* 모바일 메뉴 */
+.menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.menu-toggle-icon {
+    width: 24px;
+    height: 2px;
+    background-color: var(--header-text);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.menu-toggle-icon::before,
+.menu-toggle-icon::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 2px;
+    background-color: var(--header-text);
+    transition: all 0.3s ease;
+}
+
+.menu-toggle-icon::before {
+    top: -8px;
+}
+
+.menu-toggle-icon::after {
+    bottom: -8px;
+}
+
+/* 모바일 활성화 시 */
+.menu-toggle.active .menu-toggle-icon {
+    background-color: transparent;
+}
+
+.menu-toggle.active .menu-toggle-icon::before {
+    transform: rotate(45deg);
+    top: 0;
+}
+
+.menu-toggle.active .menu-toggle-icon::after {
+    transform: rotate(-45deg);
+    bottom: 0;
+}
+
+/* 반응형 메뉴 */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-menu {
+        position: fixed;
+        top: var(--nav-height);
+        left: 0;
+        right: 0;
+        background-color: var(--header-bg);
+        flex-direction: column;
+        padding: 20px;
+        gap: 10px;
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .main-navigation.active .nav-menu {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .menu-item {
+        width: 100%;
+    }
+
+    .menu-item a {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* 스크린 리더 전용 */
+.screen-reader-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}

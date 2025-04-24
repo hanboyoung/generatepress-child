@@ -1,0 +1,112 @@
+/* ==================================================================================
+ * ⚠️ 경고: 이 파일은 현재 프로덕션에서 사용 중인 완성된 버전입니다!
+ * 🚫 직접 수정하지 마세요!
+ * 
+ * ⚠️ 주의사항:
+ * 1. 이 파일은 프로덕션 환경의 핵심 컴포넌트입니다.
+ * 2. 수정이 필요한 경우 반드시 관리자에게 문의해주세요.
+ * 3. 무단 수정 시 사이트에 심각한 문제가 발생할 수 있습니다.
+ * 4. 변경 사항은 반드시 버전 관리를 통해 추적되어야 합니다.
+ * 
+ * 최종 수정일: 2024-04-18
+ * 버전: 1.0.0
+ * 담당자: 관리자
+ * ================================================================================== */
+
+/* 기본 히어로 스타일 */
+.hero-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background: var(--background-primary);
+    margin-top: var(--header-height); /* 헤더 높이만큼 여백 추가 */
+}
+
+.hero-section {
+    width: 100%;
+    min-height: 250px;
+    background: var(--background-primary);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 24px;
+    text-align: center;
+}
+
+.hero-content {
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 32px;
+    text-align: center;
+    padding-top: 32px;
+    padding-bottom: 32px; /* 추가 상단 여백 */
+}
+
+/* 히어로 타이틀 */
+.hero-title {
+    font-size: 56px;
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin: 0 0 20px;
+    font-weight: 700;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 히어로 설명 */
+.hero-description {
+    font-size: 20px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin: 0 auto;
+    max-width: 780px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+}
+
+/* 애니메이션 키프레임 */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 반응형 스타일 */
+@media (max-width: 1068px) {
+    .hero-section {
+        min-height: 350px;
+        padding: 50px 20px;
+    }
+
+    .hero-title {
+        font-size: 48px;
+        margin-bottom: 16px;
+    }
+
+    .hero-description {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 734px) {
+    .hero-section {
+        min-height: 300px;
+        padding: 40px 16px;
+    }
+
+    .hero-title {
+        font-size: 32px;
+    }
+
+    .hero-description {
+        font-size: 16px;
+    }
+}

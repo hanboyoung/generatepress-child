@@ -1,0 +1,104 @@
+/* ==========================================================================
+   404 에러 페이지 스타일
+   ========================================================================== */
+
+.content-area,
+.site-main {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.error-404-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 120px); /* Adjust based on header/footer height */
+    padding: 0;
+    margin: 0;
+}
+
+.error-404-container {
+    max-width: 680px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.error-404-content {
+    transform: translateY(-10%);
+}
+
+.error-404-title {
+    font-size: 48px;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    color: #1d1d1f;
+}
+
+.error-404-description {
+    font-size: 21px;
+    line-height: 1.4;
+    margin-bottom: 32px;
+    color: #86868b;
+}
+
+.error-404-actions {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.error-404-button {
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: 980px;
+    font-size: 17px;
+    line-height: 1.17648;
+    font-weight: 400;
+    letter-spacing: -0.022em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.error-404-button {
+    background-color: #0071e3;
+    color: #fff;
+    border: none;
+}
+
+.error-404-button:hover {
+    background-color: #0077ED;
+}
+
+.error-404-button-secondary {
+    background-color: #fbfbfd;
+    color: #0071e3;
+    border: 1px solid #0071e3;
+}
+
+.error-404-button-secondary:hover {
+    background-color: #f5f5f7;
+}
+
+@media only screen and (max-width: 734px) {
+    .error-404-title {
+        font-size: 40px;
+    }
+    
+    .error-404-description {
+        font-size: 19px;
+    }
+    
+    .error-404-button {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .error-404-content {
+        transform: translateY(-5%);
+    }
+} 

@@ -1,0 +1,189 @@
+/*
+Theme Name: GeneratePress Child
+Theme URI: https://generatepress.com
+Template: generatepress
+Author: Tom Usborne
+Author URI: https://tomusborne.com
+Description: A lightweight and powerful theme that makes building websites easy and fun.
+Version: 1.0.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: generatepress-child
+*/
+
+/* ==================================================================================
+ * ⚠️ 경고: 이 파일은 현재 프로덕션에서 사용 중인 완성된 버전입니다!
+ * 🚫 직접 수정하지 마세요!
+ * 
+ * 최종 수정일: 2024-04-18
+ * 버전: 1.0.0
+ * 
+ * 새로운 스타일이 필요한 경우:
+ * 1. 이 파일을 복사하여 새로운 이름으로 저장
+ * 2. 새로운 파일에서 작업을 진행해 주세요
+ * ================================================================================== */
+
+/* ==========================================================================
+   기본 스타일 오버라이드
+   ========================================================================== */
+
+/* 기본 색상 변수 */
+:root {
+    --background-primary: #ffffff;
+    --background-secondary: #f5f5f7;
+    --text-primary: #1d1d1f;
+    --text-secondary: #6e6e73;
+    --accent-color: #6E45E2;
+    --border-color: rgba(0, 0, 0, 0.1);
+    
+    /* 색상 */
+    --purple-base: #6E45E2;
+    --purple-dark: #5B35D5;
+    --purple-light: #8A67E8;
+    --purple-ultra-light: #F6F2FF;
+    
+    /* 기타 */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1);
+
+    /* 페이지네이션 */
+    --pagination-background: var(--background-secondary);
+    --pagination-text: var(--text-primary);
+    --pagination-active-background: var(--accent-color);
+    --pagination-active-text: var(--text-on-accent);
+    --pagination-hover-background: var(--accent-color-light);
+    --pagination-hover-text: var(--text-primary);
+}
+
+/* 브라우저 기본 스타일 초기화 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* 한국어 최적화 */
+:lang(ko) {
+    word-break: keep-all;
+    word-wrap: break-word;
+}
+
+:lang(ja), :lang(ko), :lang(th), :lang(zh) {
+    font-style: normal;
+}
+
+/* 기본 레이아웃 */
+#page {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 푸터 스타일 */
+.site-footer {
+    background: var(--background-secondary);
+    padding: 40px 0;
+    margin-top: auto;
+}
+
+/* 기본 폰트 설정 */
+@font-face {
+    font-family: 'Freesentation';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-1Thin.woff2') format('woff2');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Freesentation';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-3Light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Freesentation';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-5Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Freesentation';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-7Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Freesentation';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-9Black.woff2') format('woff2');
+    font-weight: 900;
+    font-style: normal;
+}
+
+/* 전역 폰트 적용 */
+body,
+button,
+input,
+select,
+textarea,
+.site-title,
+.entry-title,
+h1, h2, h3, h4, h5, h6,
+.main-navigation,
+.menu-item,
+.site-description,
+.widget-title,
+.post-title,
+.page-title {
+    font-family: 'Freesentation', sans-serif !important;
+    font-weight: 300;
+}
+
+/* 제목 요소들의 기본 굵기 설정 */
+h1, .h1 { font-weight: 900; }
+h2, .h2 { font-weight: 700; }
+h3, .h3 { font-weight: 500; }
+h4, .h4 { font-weight: 500; }
+h5, .h5 { font-weight: 300; }
+h6, .h6 { font-weight: 300; }
+
+/* 기본 링크 스타일 */
+a {
+    color: var(--purple-base);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: var(--purple-dark);
+}
+
+/* 이미지 기본 스타일 */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* 커버 이미지 공통 스타일 */
+.cover-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* 이미지 호버 트랜지션 공통 스타일 */
+.image-hover-zoom {
+    transition: transform 0.5s cubic-bezier(0.42, 0, 0.58, 1);
+}
+
+.image-hover-zoom:hover {
+    transform: scale(1.03);
+} 
