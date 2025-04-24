@@ -19,7 +19,7 @@ if (!empty($categories)) : ?>
     <div class="tab-menu-container">
         <ul class="tab-menu-list">
             <?php foreach ($categories as $category) : 
-                $is_active = ($current_category === $category->slug) ? 'active' : '';
+                $is_active = ($current_category === $category-saving-life-guide) ? 'active' : '';
             ?>
                 <li class="tab-menu-item <?php echo esc_attr($is_active); ?>">
                     <a href="<?php echo esc_url(get_category_link($category->term_id)); ?>" 
