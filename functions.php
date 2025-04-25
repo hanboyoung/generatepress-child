@@ -15,14 +15,14 @@ function gpc_enqueue_child_styles() {
     wp_enqueue_style('gpc-style', $base_uri . '/style.css', array(), filemtime($base_dir . '/style.css'));
 
     // 공통 컴포넌트 (항상 불러올 것만)
-    $css_components = ['header', 'hero', 'card', 'image', 'tab-menu', 'page', 'pagination', 'tag', 'button', 'category', 'list'];
+    $css_components = ['header', 'hero', 'card', 'image', 'tab-menu', 'page', 'pagination', 'tag', 'button', 'list'];
     foreach ($css_components as $component) {
         $path = "/assets/css/{$component}.css";
         if (file_exists($base_dir . $path)) {
             wp_enqueue_style("gpc-{$component}-style", $base_uri . $path, ['gpc-style'], filemtime($base_dir . $path));
         }
     }
-    // 페이지 전용: page-about.css 이런 식으로
+    // 페이지 전용: page-about.css 
     if (is_page()) {
         $slug = get_post_field('post_name', get_post());
         $path = "/assets/css/page-{$slug}.css";
@@ -31,7 +31,7 @@ function gpc_enqueue_child_styles() {
         }
     }
 
-    // 카테고리 전용: category-news.css 이런 식으로
+    // 카테고리 전용: category-news.css
     if (is_category()) {
         $category = get_queried_object();
         if (isset($category->slug)) {
