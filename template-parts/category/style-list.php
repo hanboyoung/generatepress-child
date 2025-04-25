@@ -36,14 +36,6 @@ $custom_query = isset($args['custom_query']) ? $args['custom_query'] : $wp_query
                 </article>
             <?php endwhile; ?>
         </div>
-        <?php
-        // 페이지네이션
-        the_posts_pagination(array(
-            'mid_size' => 2,
-            'prev_text' => '이전',
-            'next_text' => '다음',
-        ));
-        ?>
     <?php else : ?>
         <p class="no-posts">게시물이 없습니다.</p>
     <?php endif; wp_reset_postdata(); ?>

@@ -32,12 +32,12 @@ get_header(); ?>
     }
     ?>
     
-    <!-- 카테고리 히어로 섹션 -->
-    <section class="hero-section category-hero">
-        <div class="hero-content">
-            <h1 class="hero-title animate-on-scroll"><?php echo esc_html($current_category->name); ?></h1>
+    <!-- 애플 스타일 히어로 섹션 -->
+    <section class="apple-hero">
+        <div class="apple-hero-container">
+            <h1 class="apple-hero-title"><?php echo esc_html($current_category->name); ?></h1>
             <?php if ($current_category->description) : ?>
-                <p class="hero-description animate-on-scroll"><?php echo wp_kses_post($current_category->description); ?></p>
+                <p class="apple-hero-description"><?php echo wp_kses_post($current_category->description); ?></p>
             <?php endif; ?>
         </div>
     </section>
@@ -52,12 +52,16 @@ get_header(); ?>
                     'parent_category' => $main_category->term_id
                 ));
 
+                // 현재 페이지 번호 가져오기
+                $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+                
                 // WP_Query 인수 설정
                 $args = array(
                     'cat' => $current_category->term_id,
-                    'posts_per_page' => -1,
+                    'posts_per_page' => 10, // 한 페이지에 10개의 포스트
                     'orderby' => 'date',
-                    'order' => 'DESC'
+                    'order' => 'DESC',
+                    'paged' => $paged
                 );
                 
                 // 새로운 쿼리 실행
@@ -68,6 +72,20 @@ get_header(); ?>
                     'category_slug' => 'saving-life',
                     'custom_query' => $custom_query
                 ));
+                
+                // 페이지네이션
+                echo '<div class="apple-pagination">';
+                echo paginate_links(array(
+                    'base' => str_replace(999999999, '%#%', esc_url(get_pagenum_link(999999999))),
+                    'format' => '?paged=%#%',
+                    'current' => max(1, $paged),
+                    'total' => $custom_query->max_num_pages,
+                    'prev_text' => '<span class="prev-icon">←</span> 이전',
+                    'next_text' => '다음 <span class="next-icon">→</span>',
+                    'mid_size' => 2,
+                    'end_size' => 1,
+                ));
+                echo '</div>';
 
                 // 쿼리 초기화
                 wp_reset_postdata();
@@ -76,5 +94,105 @@ get_header(); ?>
         </main>
     </div>
 </div>
+
+<style>
+/* 애플 스타일 히어로 섹션 */
+.apple-hero {
+    padding: 120px 20px 40px;
+    text-align: center;
+    background-color: #fff;
+}
+
+.apple-hero-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.apple-hero-title {
+    font-size: 56px;
+    line-height: 1.1;
+    font-weight: 700;
+    color: #1d1d1f;
+    margin-bottom: 20px;
+    letter-spacing: -0.015em;
+}
+
+.apple-hero-description {
+    font-size: 21px;
+    line-height: 1.5;
+    font-weight: 400;
+    color: #6e6e73;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* 애플 스타일 페이지네이션 */
+.apple-pagination {
+    margin: 40px 0;
+    text-align: center;
+    font-size: 15px;
+}
+
+.apple-pagination .page-numbers {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 4px;
+    padding: 8px 12px;
+    color: #1d1d1f;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: all 0.2s ease;
+}
+
+.apple-pagination .page-numbers:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.apple-pagination .page-numbers.current {
+    background-color: #000;
+    color: #fff;
+}
+
+.apple-pagination .prev-icon,
+.apple-pagination .next-icon {
+    font-size: 14px;
+    display: inline-block;
+    margin: 0 2px;
+}
+
+@media (max-width: 768px) {
+    .apple-hero {
+        padding: 80px 20px 30px;
+    }
+    
+    .apple-hero-title {
+        font-size: 40px;
+    }
+    
+    .apple-hero-description {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .apple-hero {
+        padding: 60px 20px 20px;
+    }
+    
+    .apple-hero-title {
+        font-size: 32px;
+    }
+    
+    .apple-hero-description {
+        font-size: 16px;
+    }
+    
+    .apple-pagination .page-numbers {
+        padding: 6px 10px;
+        font-size: 14px;
+    }
+}
+</style>
 
 <?php get_footer(); ?> 
