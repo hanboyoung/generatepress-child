@@ -18,8 +18,16 @@ if (!empty($categories)) : ?>
 <div class="category-tab-menu">
     <div class="tab-menu-container">
         <ul class="tab-menu-list">
+            <!-- 전체보기 탭 추가 -->
+            <li class="tab-menu-item <?php echo ($current_category == $parent_category) ? 'active' : ''; ?>">
+                <a href="<?php echo esc_url(get_category_link($parent_category)); ?>" 
+                   class="tab-menu-link"
+                   data-category="all">
+                    전체보기
+                </a>
+            </li>
             <?php foreach ($categories as $category) : 
-                $is_active = ($current_category === $category-saving-life-guide) ? 'active' : '';
+                $is_active = ($current_category == $category->term_id) ? 'active' : '';
             ?>
                 <li class="tab-menu-item <?php echo esc_attr($is_active); ?>">
                     <a href="<?php echo esc_url(get_category_link($category->term_id)); ?>" 

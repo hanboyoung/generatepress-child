@@ -14,13 +14,15 @@ function gpc_enqueue_child_styles() {
 
     wp_enqueue_style('gpc-style', $base_uri . '/style.css', array(), filemtime($base_dir . '/style.css'));
 
-    $css_components = ['header', 'hero', 'card', 'image', 'tab-menu', 'page', 'pagination', 'tag', 'button'];
+    $css_components = ['header', 'hero', 'card', 'image', 'tab-menu', 'page', 'pagination', 'tag', 'button', 'category'];
     foreach ($css_components as $component) {
         $path = "/assets/css/{$component}.css";
         if (file_exists($base_dir . $path)) {
             wp_enqueue_style("gpc-{$component}-style", $base_uri . $path, ['gpc-style'], filemtime($base_dir . $path));
         }
     }
+
+    wp_enqueue_style('category-style', get_stylesheet_directory_uri() . '/assets/css/category.css', array(), '1.0.0');
 }
 add_action('wp_enqueue_scripts', 'gpc_enqueue_child_styles', 99);
 
