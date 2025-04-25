@@ -11,22 +11,42 @@ if (!defined('ABSPATH')) exit; // 직접 접근 방지
 function gpc_enqueue_child_styles() {
     $base_uri = get_stylesheet_directory_uri();
     $base_dir = get_stylesheet_directory();
-
+    // 메인 스타일, 항상 적용
     wp_enqueue_style('gpc-style', $base_uri . '/style.css', array(), filemtime($base_dir . '/style.css'));
 
-    $css_components = ['header', 'hero', 'card', 'image', 'tab-menu', 'page', 'pagination', 'tag', 'button', 'category'];
+    // 공통 컴포넌트 (항상 불러올 것만)
+    $css_components = ['header', 'hero', 'card', 'image', 'tab-menu', 'page', 'pagination', 'tag', 'button', 'category', 'list'];
     foreach ($css_components as $component) {
         $path = "/assets/css/{$component}.css";
         if (file_exists($base_dir . $path)) {
             wp_enqueue_style("gpc-{$component}-style", $base_uri . $path, ['gpc-style'], filemtime($base_dir . $path));
         }
     }
+    // 페이지 전용: page-about.css 이런 식으로
+    if (is_page()) {
+        $slug = get_post_field('post_name', get_post());
+        $path = "/assets/css/page-{$slug}.css";
+        if (file_exists($base_dir . $path)) {
+            wp_enqueue_style("gpc-page-{$slug}-style", $base_uri . $path, ['gpc-style'], filemtime($base_dir . $path));
+        }
+    }
 
-    wp_enqueue_style('category-style', get_stylesheet_directory_uri() . '/assets/css/category.css', array(), '1.0.0');
+    // 카테고리 전용: category-news.css 이런 식으로
+    if (is_category()) {
+        $category = get_queried_object();
+        if (isset($category->slug)) {
+            $slug = $category->slug;
+            $path = "/assets/css/category-{$slug}.css";
+            if (file_exists($base_dir . $path)) {
+                wp_enqueue_style("gpc-category-{$slug}-style", $base_uri . $path, ['gpc-style'], filemtime($base_dir . $path));
+            }
+        }
+    }
+
 }
 add_action('wp_enqueue_scripts', 'gpc_enqueue_child_styles', 99);
 
-/**
+/**S
  * 부모 테마 주요 액션/필터 제거 (필요한 경우만 유지)
  */
 function gpc_clean_parent_hooks() {

@@ -15,23 +15,25 @@ $categories = get_categories(array(
 ));
 
 ?>
-<div class="apple-tag-menu">
-    <div class="tag-menu-container">
-        <div class="tag-menu-list">
-            <!-- 전체보기 태그 -->
+<!-- 탭 메뉴 -->
+<div class="tab-navigation">
+    <div class="tab-container">
+        <div class="tab-menu">
+            <!-- 전체보기 탭 -->
             <a href="<?php echo esc_url(get_category_link($parent_category)); ?>" 
-               class="tag-menu-item <?php echo ($current_category == $parent_category) ? 'active' : ''; ?>"
-               data-category="all">
+               class="tab-item <?php echo ($current_category == $parent_category) ? 'active' : ''; ?>">
                 전체보기
+                <?php $post_count = get_category($parent_category)->count; ?>
+                <span class="post-count"><?php echo $post_count; ?></span>
             </a>
             
             <?php foreach ($categories as $category) : 
                 $is_active = ($current_category == $category->term_id) ? 'active' : '';
             ?>
                 <a href="<?php echo esc_url(get_category_link($category->term_id)); ?>" 
-                   class="tag-menu-item <?php echo esc_attr($is_active); ?>"
-                   data-category="<?php echo esc_attr($category->slug); ?>">
+                   class="tab-item <?php echo esc_attr($is_active); ?>">
                     <?php echo esc_html($category->name); ?>
+                    <span class="post-count"><?php echo $category->count; ?></span>
                 </a>
             <?php endforeach; ?>
         </div>
@@ -39,66 +41,75 @@ $categories = get_categories(array(
 </div>
 
 <style>
-:root {
-    --tag-bg-color: rgba(0, 0, 0, 0.05);
-    --tag-bg-hover: rgba(0, 0, 0, 0.1);
-    --tag-bg-active: #000;
-    --tag-text-color: #1d1d1f;
-    --tag-text-active: #fff;
-    --container-width: 1200px;
+/* 탭 메뉴 스타일 */
+.tab-navigation {
+    margin-bottom: 30px;
 }
 
-.apple-tag-menu {
-    margin: 40px 0;
+.tab-container {
+    background-color: #f5f5f7;
+    border-radius: 8px;
+    padding: 5px;
 }
 
-.tag-menu-container {
-    max-width: var(--container-width);
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.tag-menu-list {
+.tab-menu {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
-    margin: 0;
-    padding: 0;
+    gap: 5px;
 }
 
-.tag-menu-item {
+.tab-item {
     display: inline-block;
     padding: 8px 16px;
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--tag-text-color);
-    background-color: var(--tag-bg-color);
-    border-radius: 50px;
+    font-size: 14px;
+    color: #333;
     text-decoration: none;
+    border-radius: 6px;
     transition: all 0.3s ease;
 }
 
-.tag-menu-item:hover {
-    background-color: var(--tag-bg-hover);
+.tab-item:hover {
+    background-color: rgba(0, 0, 0, 0.05);
 }
 
-.tag-menu-item.active {
-    color: var(--tag-text-active);
-    background-color: var(--tag-bg-active);
+.tab-item.active {
+    background-color: #fff;
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.post-count {
+    display: inline-block;
+    margin-left: 5px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #6B46C1;
+    background-color: rgba(107, 70, 193, 0.1);
+    padding: 2px 6px;
+    border-radius: 12px;
+}
+
+.tab-item.active .post-count {
+    background-color: rgba(107, 70, 193, 0.15);
 }
 
 @media (max-width: 768px) {
-    .apple-tag-menu {
-        margin: 30px 0;
+    .tab-navigation {
+        margin: 0 -20px 30px;
+    }
+    
+    .tab-container {
         overflow-x: auto;
+        border-radius: 0;
     }
     
-    .tag-menu-list {
+    .tab-menu {
         flex-wrap: nowrap;
-        padding-bottom: 10px;
+        padding: 5px 20px;
+        width: max-content;
     }
     
-    .tag-menu-item {
+    .tab-item {
         white-space: nowrap;
     }
 }

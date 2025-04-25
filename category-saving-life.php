@@ -7,10 +7,11 @@
 
 // 카테고리 스타일 로드
 wp_enqueue_style('category-style', get_stylesheet_directory_uri() . '/assets/css/category.css', array(), '1.0.0');
+wp_enqueue_style('list-style', get_stylesheet_directory_uri() . '/assets/css/list.css', array(), '1.0.0');
 
 get_header(); ?>
 
-<div id="page" class="site">
+<div id="page" class="site apple-newsroom">
     <?php
     // 현재 카테고리 정보 가져오기
     $current_category = get_queried_object();
@@ -32,12 +33,12 @@ get_header(); ?>
     }
     ?>
     
-    <!-- 애플 스타일 히어로 섹션 -->
-    <section class="apple-hero">
-        <div class="apple-hero-container">
-            <h1 class="apple-hero-title"><?php echo esc_html($current_category->name); ?></h1>
+    <!-- 카테고리 히어로 섹션 -->
+    <section class="category-hero">
+        <div class="container">
+            <h1 class="category-title"><?php echo esc_html($current_category->name); ?></h1>
             <?php if ($current_category->description) : ?>
-                <p class="apple-hero-description"><?php echo wp_kses_post($current_category->description); ?></p>
+                <p class="category-description"><?php echo wp_kses_post($current_category->description); ?></p>
             <?php endif; ?>
         </div>
     </section>
@@ -58,7 +59,7 @@ get_header(); ?>
                 // WP_Query 인수 설정
                 $args = array(
                     'cat' => $current_category->term_id,
-                    'posts_per_page' => 10, // 한 페이지에 10개의 포스트
+                    'posts_per_page' => 5, // 한 페이지에 5개의 포스트
                     'orderby' => 'date',
                     'order' => 'DESC',
                     'paged' => $paged
@@ -74,18 +75,20 @@ get_header(); ?>
                 ));
                 
                 // 페이지네이션
-                echo '<div class="apple-pagination">';
-                echo paginate_links(array(
-                    'base' => str_replace(999999999, '%#%', esc_url(get_pagenum_link(999999999))),
-                    'format' => '?paged=%#%',
-                    'current' => max(1, $paged),
-                    'total' => $custom_query->max_num_pages,
-                    'prev_text' => '<span class="prev-icon">←</span> 이전',
-                    'next_text' => '다음 <span class="next-icon">→</span>',
-                    'mid_size' => 2,
-                    'end_size' => 1,
-                ));
-                echo '</div>';
+                if ($custom_query->max_num_pages > 1) :
+                    echo '<div class="pagination">';
+                    echo paginate_links(array(
+                        'base' => str_replace(999999999, '%#%', esc_url(get_pagenum_link(999999999))),
+                        'format' => '?paged=%#%',
+                        'current' => max(1, $paged),
+                        'total' => $custom_query->max_num_pages,
+                        'prev_text' => '이전',
+                        'next_text' => '다음',
+                        'mid_size' => 2,
+                        'end_size' => 1,
+                    ));
+                    echo '</div>';
+                endif;
 
                 // 쿼리 초기화
                 wp_reset_postdata();
@@ -96,102 +99,40 @@ get_header(); ?>
 </div>
 
 <style>
-/* 애플 스타일 히어로 섹션 */
-.apple-hero {
-    padding: 120px 20px 40px;
-    text-align: center;
-    background-color: #fff;
+.category-meta {
+    margin-bottom: 16px;
 }
 
-.apple-hero-container {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.apple-hero-title {
-    font-size: 56px;
-    line-height: 1.1;
-    font-weight: 700;
-    color: #1d1d1f;
-    margin-bottom: 20px;
-    letter-spacing: -0.015em;
-}
-
-.apple-hero-description {
-    font-size: 21px;
-    line-height: 1.5;
-    font-weight: 400;
-    color: #6e6e73;
-    max-width: 700px;
-    margin: 0 auto;
-}
-
-/* 애플 스타일 페이지네이션 */
-.apple-pagination {
-    margin: 40px 0;
-    text-align: center;
-    font-size: 15px;
-}
-
-.apple-pagination .page-numbers {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 4px;
-    padding: 8px 12px;
-    color: #1d1d1f;
-    text-decoration: none;
-    border-radius: 50px;
-    transition: all 0.2s ease;
-}
-
-.apple-pagination .page-numbers:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-}
-
-.apple-pagination .page-numbers.current {
-    background-color: #000;
-    color: #fff;
-}
-
-.apple-pagination .prev-icon,
-.apple-pagination .next-icon {
-    font-size: 14px;
+.category-label {
     display: inline-block;
-    margin: 0 2px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #6B46C1;
 }
 
-@media (max-width: 768px) {
-    .apple-hero {
-        padding: 80px 20px 30px;
-    }
-    
-    .apple-hero-title {
-        font-size: 40px;
-    }
-    
-    .apple-hero-description {
-        font-size: 18px;
-    }
+.post-item {
+    border: 1px solid #e6e6e6;
+    border-radius: 8px;
 }
 
-@media (max-width: 480px) {
-    .apple-hero {
-        padding: 60px 20px 20px;
-    }
-    
-    .apple-hero-title {
-        font-size: 32px;
-    }
-    
-    .apple-hero-description {
-        font-size: 16px;
-    }
-    
-    .apple-pagination .page-numbers {
-        padding: 6px 10px;
-        font-size: 14px;
-    }
+.post-item:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.post-list {
+    border-top: 1px solid #e6e6e6;
+    padding-top: 30px;
+}
+
+.post-item + .post-item {
+    margin-top: 24px;
+}
+
+.pagination {
+    border-top: 1px solid #e6e6e6;
+    padding-top: 30px;
 }
 </style>
 
