@@ -68,26 +68,51 @@
     align-items: center;
 }
 
-.nav-menu {
+.nav-menu, .header-menu {
     display: flex;
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
-.nav-menu li {
+.nav-menu li, .header-menu li {
     margin: 0 15px;
+    position: relative;
 }
 
-.nav-menu a {
+.nav-menu a, .header-menu a {
     color: var(--header-text);
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s ease;
 }
 
-.nav-menu a:hover {
-    color: var(--accent-color);
+.nav-menu a:hover, .header-menu a:hover {
+    color: var(--purple-base);
+}
+
+/* 현재 선택된 메뉴 항목 스타일 */
+.nav-menu .current-menu-item > a, 
+.header-menu .current-menu-item > a,
+.nav-menu .current-menu-ancestor > a, 
+.header-menu .current-menu-ancestor > a {
+    color: var(--purple-base);
+    position: relative;
+}
+
+/* 선택된 메뉴 항목 밑줄 효과 */
+.nav-menu .current-menu-item > a::after, 
+.header-menu .current-menu-item > a::after,
+.nav-menu .current-menu-ancestor > a::after, 
+.header-menu .current-menu-ancestor > a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--purple-base);
+    border-radius: 2px;
 }
 
 /* Menu Toggle Button */
@@ -112,16 +137,16 @@
 }
 
 /* Toggle Animation */
+.menu-toggle.toggled span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 6px);
+}
+
 .menu-toggle.toggled span:nth-child(2) {
     opacity: 0;
 }
 
 .menu-toggle.toggled span:nth-child(3) {
-    transform: rotate(45deg) translate(-5px, -6px);
-}
-
-.menu-toggle.toggled span:nth-child(4) {
-    transform: rotate(-45deg) translate(-5px, 6px);
+    transform: rotate(-45deg) translate(5px, -6px);
 }
 
 /* Responsive Styles */
@@ -130,7 +155,21 @@
         display: block;
     }
     
-    .nav-menu {
+    /* Fix for GeneratePress hidden elements */
+    .main-navigation:not(.toggled) .menu-toggle {
+        display: block !important;
+    }
+    
+    .main-navigation:not(.toggled) ul {
+        position: absolute !important;
+        left: -9999em !important;
+        right: auto !important;
+        top: auto !important;
+        height: 0 !important;
+        overflow: hidden !important;
+    }
+    
+    .nav-menu, .header-menu {
         position: fixed;
         top: 0;
         right: -100%;
@@ -144,16 +183,45 @@
         box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
     }
     
-    .nav-menu.toggled {
+    .nav-menu.toggled, .header-menu.toggled {
         right: 0;
     }
     
-    .nav-menu li {
+    .nav-menu li, .header-menu li {
         margin: 15px 0;
     }
     
-    .main-navigation.toggled .nav-menu {
-        display: flex;
+    .main-navigation.toggled .nav-menu,
+    .main-navigation.toggled .header-menu {
+        display: flex !important;
+    }
+    
+    /* Fix for GeneratePress submenu */
+    .main-navigation .sub-menu {
+        display: none;
+        width: 100%;
+        position: static !important;
+        left: 0 !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        box-shadow: none;
+        margin-left: 15px;
+        border: none !important;
+    }
+    
+    .main-navigation .sub-menu.toggled-on {
+        display: block;
+    }
+    
+    /* Remove any GeneratePress animations */
+    .main-navigation .toggled .sub-menu {
+        animation: none !important;
+        transition: none !important;
+    }
+    
+    /* Fix for sticky header on mobile */
+    .site-header {
+        position: fixed !important;
     }
 }
 
@@ -246,30 +314,32 @@ header.site-header .menu-item > a {
     white-space: nowrap !important;
 }
 
-header.site-header .menu-item a:hover,
-header.site-header .menu-item > a:hover {
-    background: var(--purple-base) !important;
-    color: #fff !important;
-    box-shadow: 0 0 20px var(--purple-glow) !important;
-    border-color: var(--purple-base) !important;
-}
-
-header.site-header .current-menu-item a,
-header.site-header .current_page_item a,
-header.site-header .current-menu-item > a,
-header.site-header .current_page_item > a {
-    background: var(--purple-base) !important;
-    color: white !important;
-    border-color: var(--purple-base) !important;
-    box-shadow: 0 0 20px var(--purple-glow) !important;
-}
-
-header.site-header .current-menu-item a:hover,
-header.site-header .current_page_item a:hover,
-header.site-header .current-menu-item > a:hover,
-header.site-header .current_page_item > a:hover {
-    background: var(--purple-dark) !important;
-    border-color: var(--purple-dark) !important;
+/* 모바일에서는 다른 스타일 적용 */
+@media (max-width: 768px) {
+    header.site-header .header-menu {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 0 !important;
+    }
+    
+    header.site-header .menu-item {
+        width: 100% !important;
+    }
+    
+    header.site-header .menu-item a,
+    header.site-header .menu-item > a {
+        justify-content: flex-start !important;
+        padding: 10px 0 !important;
+        height: auto !important;
+        border: none !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+    }
+    
+    header.site-header .menu-item:last-child > a {
+        border-bottom: none !important;
+    }
 }
 
 /* 스크린 리더 전용 */

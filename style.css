@@ -223,11 +223,11 @@ img {
 }
 
 .apple-tabs-nav a:hover {
-    color: #06c;
+    color: var(--purple-base);
 }
 
 .apple-tabs-nav a.active {
-    color: #06c;
+    color: var(--purple-base);
 }
 
 .apple-tabs-nav a.active::after {
@@ -237,7 +237,7 @@ img {
     left: 0;
     width: 100%;
     height: 2px;
-    background: #06c;
+    background: var(--purple-base);
 }
 
 @media (max-width: 734px) {
@@ -280,7 +280,7 @@ img {
 }
 
 .news-item:hover .news-title {
-    color: #06c;
+    color: var(--purple-base);
 }
 
 .news-image {

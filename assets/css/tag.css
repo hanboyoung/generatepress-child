@@ -142,21 +142,21 @@ span.category-tag.category-tag-미혼모 {
 /* 경매 */
 span.category-tag.category-tag-auction,
 span.category-tag.category-tag-경매 {
-    background: linear-gradient(135deg, #9B6EF3, #B8A5F3);
+    background: linear-gradient(135deg, #6E45E2, #8A67E8);
     color: #fff;
 }
 
 /* 부동산 */
 span.category-tag.category-tag-real-estate,
 span.category-tag.category-tag-부동산 {
-    background: linear-gradient(135deg, #B8A5F3, #D4C5F3);
+    background: linear-gradient(135deg, #8A67E8, #A284EA);
     color: #fff;
 }
 
 /* 재테크 */
 span.category-tag.category-tag-finance-tips,
 span.category-tag.category-tag-재테크 {
-    background: linear-gradient(135deg, #4A90E2, #6BA7E8);
+    background: linear-gradient(135deg, #5B35D5, #6E45E2);
     color: #fff;
 }
 
@@ -313,7 +313,7 @@ span.category-tag.category-tag-저작권 {
 /* 국가정책 */
 span.category-tag.category-tag-national-policy,
 span.category-tag.category-tag-국가정책 {
-    background: linear-gradient(135deg, #4A90E2, #6BA7E8);
+    background: linear-gradient(135deg, #4D28BD, #5B35D5);
     color: #fff;
 }
 

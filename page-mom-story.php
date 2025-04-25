@@ -14,8 +14,8 @@
  */
 
 /**
- * Template Name: 미혼엄마 이야기 페이지
- * 
+ * 정적 페이지 템플릿
+ *
  * @package GeneratePress-child
  */
 
@@ -29,16 +29,16 @@ get_header(); ?>
 
     <div id="primary" class="content-area">
         <main id="main" class="site-main">
-            <!-- 메인 콘텐츠 -->
-            <div class="main-content-section">
-                <div class="container">
-                    <?php              
-                    // 이미지형 레이아웃 불러오기
-                    get_template_part('template-parts/category/style', 'image', array(
-                        'category_slug' => 'mom-story-guide' // 미혼엄마 이야기 카테고리
-                    ));
-                    ?>
-                </div>
+            <div class="container">
+                <?php              
+                // 현재 페이지의 슬러그 가져오기
+                $page_slug = get_post_field('post_name', get_post());
+                
+                // 카드형 레이아웃 불러오기
+                get_template_part('template-parts/category/style', 'card', array(
+                    'category_slug' => 'mom-story-guide' // 영상편집 카테고리 슬러그 직접 지정
+                ));
+                ?>
             </div>
         </main>
     </div>

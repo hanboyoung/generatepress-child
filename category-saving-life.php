@@ -56,10 +56,10 @@ get_header(); ?>
                 // 현재 페이지 번호 가져오기
                 $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
                 
-                // WP_Query 인수 설정
+                // WP_Query 인수 설정 - 모든 페이지에서 5개의 포스트로 통일
                 $args = array(
                     'cat' => $current_category->term_id,
-                    'posts_per_page' => 5, // 한 페이지에 5개의 포스트
+                    'posts_per_page' => 5, // 한 페이지에 5개의 포스트로 통일
                     'orderby' => 'date',
                     'order' => 'DESC',
                     'paged' => $paged
@@ -99,6 +99,7 @@ get_header(); ?>
 </div>
 
 <style>
+/* 카테고리 페이지 기본 스타일 개선 */
 .category-meta {
     margin-bottom: 16px;
 }
@@ -110,13 +111,36 @@ get_header(); ?>
     color: #6B46C1;
 }
 
+/* 컨테이너 스타일 */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* 카테고리 타이틀 개선 */
+.category-title {
+    font-size: 36px;
+    margin-bottom: 16px;
+    font-weight: 700;
+    color: #1d1d1f;
+}
+
+.category-description {
+    font-size: 18px; 
+    line-height: 1.6;
+    color: #6e6e73;
+    max-width: 800px;
+    margin-bottom: 30px;
+}
+
 /* 애플 스타일 적용 - 박스 제거하고 구분선 추가 */
 .post-item {
     border: none;
     border-radius: 0;
     border-bottom: 1px solid #e6e6e6;
     margin-bottom: 0;
-    padding: 25px 0;
+    padding: 30px 0;
 }
 
 .post-item:first-child {
@@ -127,7 +151,7 @@ get_header(); ?>
     border-bottom: none;
 }
 
-/* 포스트 리스트 스타일 */
+/* 포스트 리스트 스타일 개선 */
 .post-list {
     border-top: none;
     padding-top: 0;
@@ -137,17 +161,130 @@ get_header(); ?>
     margin-top: 0;
 }
 
+/* 포스트 제목 폰트 사이즈 증가 */
+.post-title {
+    font-size: 24px;
+    line-height: 1.3;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #1d1d1f;
+}
+
+/* 포스트 날짜 스타일 */
+.post-date {
+    font-size: 16px;
+    color: #6e6e73;
+}
+
+/* 태그 스타일 개선 */
+.post-tags {
+    margin-bottom: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.post-tag {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 20px;
+    background-color: var(--purple-ultra-light, #F6F2FF);
+    color: var(--purple-base, #6E45E2);
+}
+
+/* 태그 추가 표시 */
+.post-tag-more {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 20px;
+    background-color: #f5f5f7;
+    color: #6e6e73;
+}
+
+/* 포스트 썸네일 크기 조정 */
+.post-thumbnail {
+    width: 180px;
+    height: 120px;
+    margin-right: 24px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.post-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 포스트 링크 호버 효과 */
+.post-link:hover .post-title {
+    color: var(--purple-base, #6E45E2);
+}
+
+/* 페이지네이션 스타일 */
 .pagination {
     border-top: 1px solid #e6e6e6;
     padding-top: 30px;
     margin-top: 20px;
+    display: flex;
+    justify-content: center;
 }
 
-/* 컨테이너 스타일 */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+.pagination .page-numbers {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: 0 5px;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    color: #1d1d1f;
+    background-color: #f5f5f7;
+    transition: all 0.2s ease;
+}
+
+.pagination .page-numbers.current {
+    background-color: var(--purple-base, #6E45E2);
+    color: white;
+}
+
+.pagination .page-numbers:hover:not(.current) {
+    background-color: var(--purple-ultra-light, #F6F2FF);
+    color: var(--purple-base, #6E45E2);
+}
+
+/* 모바일 대응 */
+@media (max-width: 768px) {
+    .post-thumbnail {
+        width: 120px;
+        height: 90px;
+        margin-right: 16px;
+    }
+    
+    .post-title {
+        font-size: 20px;
+    }
+    
+    .post-date {
+        font-size: 14px;
+    }
+    
+    .post-item {
+        padding: 24px 0;
+    }
+    
+    .category-title {
+        font-size: 28px;
+    }
+    
+    .category-description {
+        font-size: 16px;
+    }
 }
 </style>
 

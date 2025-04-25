@@ -1,6 +1,6 @@
 /**
  * Mobile Menu Functionality
- * This script handles the mobile menu toggle functionality
+ * Integrates with GeneratePress parent theme functionality
  */
 
 (function($) {
@@ -12,60 +12,40 @@
     });
     
     function initMobileMenu() {
-        const menuToggle = $('.menu-toggle, .mobile-menu-control-wrapper .menu-toggle');
+        const menuToggle = $('.menu-toggle');
         const mainNavigation = $('.main-navigation');
-        const navMenu = $('.nav-menu, .main-nav');
-        const siteNavigation = $('.site-header .site-navigation');
+        const navMenu = $('.nav-menu, .header-menu');
+        const siteHeader = $('.site-header');
         
         console.log('Menu elements found:', {
             'menuToggle exists': menuToggle.length > 0,
             'mainNavigation exists': mainNavigation.length > 0,
             'navMenu exists': navMenu.length > 0,
-            'siteNavigation exists': siteNavigation.length > 0
+            'siteHeader exists': siteHeader.length > 0
         });
         
         if (menuToggle.length) {
-            // Make sure event is properly bound by removing any existing handlers
+            // Override any existing click handlers by unbinding first
             menuToggle.off('click');
             
             menuToggle.on('click', function(e) {
                 e.preventDefault();
-                e.stopPropagation();
                 
-                console.log('Menu toggle clicked');
-                
+                // Toggle classes for visual appearance
                 menuToggle.toggleClass('toggled');
                 mainNavigation.toggleClass('toggled');
                 navMenu.toggleClass('toggled');
                 
-                if (siteNavigation.length) {
-                    siteNavigation.toggleClass('toggled');
-                }
-                
-                // Toggle ARIA attributes
+                // Toggle aria attributes for accessibility
                 const expanded = menuToggle.attr('aria-expanded') === 'true' || false;
                 menuToggle.attr('aria-expanded', !expanded);
                 
-                // Force visibility of the navigation
-                if (!expanded) {
-                    navMenu.css('display', 'block');
-                    if (mainNavigation.css('display') !== 'block') {
-                        mainNavigation.css('display', 'block');
-                    }
-                } else {
-                    // Wait a bit before hiding to allow animations
-                    setTimeout(function() {
-                        navMenu.css('display', '');
-                        mainNavigation.css('display', '');
-                    }, 300);
+                // Apply GeneratePress compatibility
+                if (typeof generatepress !== 'undefined' && generatepress.hasOwnProperty('toggleNav')) {
+                    // Let GeneratePress handle the menu toggling too
+                    // but don't let it override our styles
+                    mainNavigation.css('display', 'block');
                 }
-                
-                console.log('Menu toggle state after click:', {
-                    'menuToggle has toggled class': menuToggle.hasClass('toggled'),
-                    'mainNavigation has toggled class': mainNavigation.hasClass('toggled'),
-                    'navMenu has toggled class': navMenu.hasClass('toggled'),
-                    'aria-expanded': !expanded
-                });
                 
                 return false;
             });
@@ -80,18 +60,7 @@
                     mainNavigation.removeClass('toggled');
                     menuToggle.removeClass('toggled');
                     navMenu.removeClass('toggled');
-                    if (siteNavigation.length) {
-                        siteNavigation.removeClass('toggled');
-                    }
                     menuToggle.attr('aria-expanded', 'false');
-                    
-                    // Reset display properties
-                    setTimeout(function() {
-                        navMenu.css('display', '');
-                        mainNavigation.css('display', '');
-                    }, 300);
-                    
-                    console.log('Menu closed by clicking outside');
                 }
             });
             
@@ -101,16 +70,21 @@
                     mainNavigation.removeClass('toggled');
                     menuToggle.removeClass('toggled');
                     navMenu.removeClass('toggled');
-                    if (siteNavigation.length) {
-                        siteNavigation.removeClass('toggled');
-                    }
                     menuToggle.attr('aria-expanded', 'false');
+                }
+            });
+            
+            // Handle submenu toggling
+            $('.menu-item-has-children > a').on('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
                     
-                    // Reset display properties
-                    navMenu.css('display', '');
-                    mainNavigation.css('display', '');
+                    const parentLi = $(this).parent();
+                    const subMenu = parentLi.find('> .sub-menu');
                     
-                    console.log('Menu closed due to window resize');
+                    subMenu.toggleClass('toggled-on');
+                    
+                    return false;
                 }
             });
             

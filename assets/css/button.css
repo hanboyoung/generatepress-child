@@ -136,8 +136,8 @@
     bottom: 0;
     background: linear-gradient(
         to bottom right,
-        var(--purple-base, #6E45E2) 0%,
-        var(--purple-light, #8A67E8) 100%
+        #4A72E5 0%,
+        #6E8AFF 100%
     );
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -159,7 +159,7 @@
     color: #fff;
     border-color: transparent;
     transform: translateY(-1px);
-    box-shadow: 0 4px 11px rgba(110, 69, 226, 0.35);
+    box-shadow: 0 4px 11px rgba(74, 114, 229, 0.35);
 }
 
 /* 모바일 대응 */
@@ -197,20 +197,20 @@
 }
 
 .btn-universe:hover {
-    border-color: var(--purple-base);
-    box-shadow: 0 0 20px rgba(110, 69, 226, 0.8);
-    background: var(--purple-base);
+    border-color: #4A72E5;
+    box-shadow: 0 0 20px rgba(74, 114, 229, 0.8);
+    background: #4A72E5;
     color: white;
 }
 
 .btn-universe:active {
-    box-shadow: 0 0 10px rgba(110, 69, 226, 0.4);
+    box-shadow: 0 0 10px rgba(74, 114, 229, 0.4);
 }
 
 /* 현재 활성화된 메뉴 아이템 */
 .current-menu-item .btn-universe {
-    border-color: var(--purple-base);
-    background: var(--purple-base);
+    border-color: #4A72E5;
+    background: #4A72E5;
     color: white;
-    box-shadow: 0 0 20px rgba(110, 69, 226, 0.8);
+    box-shadow: 0 0 20px rgba(74, 114, 229, 0.8);
 } 

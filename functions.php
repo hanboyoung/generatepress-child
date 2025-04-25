@@ -118,24 +118,24 @@ add_action('wp_enqueue_scripts', 'enqueue_image_grid_styles');
  * 반응형 메뉴 스타일 및 스크립트 등록
  */
 function gpc_enqueue_responsive_menu() {
-    // Register styles
+    // Register styles with dependency on GeneratePress styles
     wp_enqueue_style(
         'gpc-responsive-menu',
         get_stylesheet_directory_uri() . '/assets/css/responsive-menu.css',
-        array(),
+        array('generate-style', 'generate-mobile-style'),
         filemtime( get_stylesheet_directory() . '/assets/css/responsive-menu.css' )
     );
 
-    // Register scripts
+    // Register scripts with dependency on GeneratePress navigation
     wp_enqueue_script(
         'gpc-mobile-menu',
         get_stylesheet_directory_uri() . '/assets/js/mobile-menu.js',
-        array('jquery'),
+        array('jquery', 'generate-menu'),
         filemtime( get_stylesheet_directory() . '/assets/js/mobile-menu.js' ),
         true
     );
 }
-add_action( 'wp_enqueue_scripts', 'gpc_enqueue_responsive_menu' );
+add_action( 'wp_enqueue_scripts', 'gpc_enqueue_responsive_menu', 20 );
 
 /**
  * GeneratePress 기본 반응형 기능 활성화
@@ -169,5 +169,69 @@ function gpc_restore_generatepress_responsive() {
 add_action('wp_enqueue_scripts', 'gpc_restore_generatepress_responsive', 100);
 
 /**
- * 
+ * 좋아요 기능 AJAX 처리
  */
+function post_like_callback() {
+    // 보안 검증
+    check_ajax_referer('like_post_nonce', 'nonce');
+    
+    $post_id = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
+    
+    if ($post_id <= 0) {
+        wp_send_json_error();
+        return;
+    }
+    
+    // 현재 좋아요 수 가져오기
+    $likes = get_post_meta($post_id, 'post_likes', true);
+    if (!$likes) $likes = 0;
+    
+    // 사용자가 이미 좋아요 했는지 확인
+    $already_liked = isset($_COOKIE['post_liked_' . $post_id]);
+    
+    if ($already_liked) {
+        // 좋아요 취소
+        $likes--;
+        $liked = false;
+    } else {
+        // 좋아요 추가
+        $likes++;
+        $liked = true;
+    }
+    
+    // 좋아요 수가 음수가 되지 않도록
+    if ($likes < 0) $likes = 0;
+    
+    // 좋아요 수 업데이트
+    update_post_meta($post_id, 'post_likes', $likes);
+    
+    // 결과 반환
+    wp_send_json_success(array(
+        'likes' => $likes,
+        'liked' => $liked
+    ));
+}
+add_action('wp_ajax_post_like', 'post_like_callback');
+add_action('wp_ajax_nopriv_post_like', 'post_like_callback');
+
+/**
+ * 인기 포스트 가져오기 (좋아요 수 기준)
+ */
+function get_popular_posts_by_likes($count = 5) {
+    $args = array(
+        'post_type' => 'post',
+        'posts_per_page' => $count,
+        'meta_key' => 'post_likes',
+        'orderby' => 'meta_value_num',
+        'order' => 'DESC',
+        'meta_query' => array(
+            array(
+                'key' => 'post_likes',
+                'value' => '0',
+                'compare' => '>'
+            )
+        )
+    );
+    
+    return new WP_Query($args);
+}
