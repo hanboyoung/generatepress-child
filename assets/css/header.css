@@ -26,31 +26,158 @@
 
 /* 헤더 위치 고정 및 기본 스타일 */
 .site-header {
+    padding: 20px 0;
     background-color: var(--header-bg);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
+    width: 100%;
     z-index: 1000;
-    height: var(--nav-height);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.inside-header {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.site-logo {
+    margin-right: 20px;
+}
+
+.site-logo img {
+    max-height: 50px;
+    width: auto;
+}
+
+/* Navigation Styles */
+.main-navigation {
+    display: flex;
+    align-items: center;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-menu li {
+    margin: 0 15px;
+}
+
+.nav-menu a {
+    color: var(--header-text);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-menu a:hover {
+    color: var(--accent-color);
+}
+
+/* Menu Toggle Button */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    position: relative;
+    z-index: 999;
+    outline: none;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 24px;
+    height: 3px;
+    background-color: var(--header-text);
+    margin: 5px 0;
+    transition: all 0.3s ease;
+}
+
+/* Toggle Animation */
+.menu-toggle.toggled span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.toggled span:nth-child(3) {
+    transform: rotate(45deg) translate(-5px, -6px);
+}
+
+.menu-toggle.toggled span:nth-child(4) {
+    transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+    
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 250px;
+        height: 100vh;
+        background-color: var(--header-bg);
+        flex-direction: column;
+        padding: 80px 20px 20px;
+        transition: right 0.3s ease;
+        z-index: 998;
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .nav-menu.toggled {
+        right: 0;
+    }
+    
+    .nav-menu li {
+        margin: 15px 0;
+    }
+    
+    .main-navigation.toggled .nav-menu {
+        display: flex;
+    }
 }
 
 /* 헤더로 가려지는 콘텐츠 보정 */
 body {
-    padding-top: var(--nav-height);
+    padding-top: calc(var(--nav-height) + 40px); /* 헤더 높이 + 패딩 */
 }
 .admin-bar body {
-    padding-top: calc(var(--nav-height) + 32px); /* 워드프레스 툴바 높이까지 포함 */
+    padding-top: calc(var(--nav-height) + 40px); /* 헤더 높이 + 패딩 */
 }
 
+.admin-bar .site-header {
+    top: 32px; /* WordPress 관리자 바 높이 */
+}
 
 @media screen and (max-width: 782px) {
+    .admin-bar .site-header {
+        top: 46px; /* 모바일에서의 WordPress 관리자 바 높이 */
+    }
+    
     .admin-bar body {
-        padding-top: calc(var(--nav-height) + 46px);
+        padding-top: calc(var(--nav-height) + 40px);
     }
 }
-
 
 /* 헤더 내부 컨테이너 */
 .header-inner {
@@ -80,149 +207,69 @@ body {
     width: auto;
 }
 
-/* 네비게이션 */
-.main-navigation {
+/* 네비게이션 - 어디서나 일관된 스타일 적용 */
+header.site-header .header-nav {
     display: flex;
     align-items: center;
 }
 
-.nav-menu {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    gap: 12px;
+header.site-header .header-menu {
+    display: flex !important;
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    gap: 12px !important;
 }
 
-.menu-item {
-    display: flex;
-    align-items: center;
+header.site-header .menu-item {
+    display: flex !important;
+    align-items: center !important;
+    margin: 0 !important;
 }
 
-.menu-item a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8px 16px;
-    height: 40px;
-    font-size: 15px;
-    font-weight: 500;
-    border-radius: 8px;
-    text-decoration: none;
-    color: var(--header-text);
-    background-color: transparent;
-    border: 1px solid var(--border-color);
-    box-shadow: var(--button-shadow);
-    transition: all 0.3s ease;
-    white-space: nowrap;
+header.site-header .menu-item a,
+header.site-header .menu-item > a {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 8px 16px !important;
+    height: 40px !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    border-radius: 8px !important;
+    text-decoration: none !important;
+    color: var(--header-text) !important;
+    background-color: transparent !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: var(--button-shadow) !important;
+    transition: all 0.3s ease !important;
+    white-space: nowrap !important;
 }
 
-.menu-item a:hover {
-    background: var(--purple-base);
-    color: #fff;
-    box-shadow: 0 0 20px var(--purple-glow);
-    border-color: var(--purple-base);
+header.site-header .menu-item a:hover,
+header.site-header .menu-item > a:hover {
+    background: var(--purple-base) !important;
+    color: #fff !important;
+    box-shadow: 0 0 20px var(--purple-glow) !important;
+    border-color: var(--purple-base) !important;
 }
 
-.current-menu-item a,
-.current_page_item a {
-    background: var(--purple-base);
-    color: white;
-    border-color: var(--purple-base);
-    box-shadow: 0 0 20px var(--purple-glow);
+header.site-header .current-menu-item a,
+header.site-header .current_page_item a,
+header.site-header .current-menu-item > a,
+header.site-header .current_page_item > a {
+    background: var(--purple-base) !important;
+    color: white !important;
+    border-color: var(--purple-base) !important;
+    box-shadow: 0 0 20px var(--purple-glow) !important;
 }
 
-.current-menu-item a:hover,
-.current_page_item a:hover {
-    background: var(--purple-dark);
-    border-color: var(--purple-dark);
-}
-
-/* 모바일 메뉴 */
-.menu-toggle {
-    display: none;
-    background: transparent;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-}
-
-.menu-toggle-icon {
-    width: 24px;
-    height: 2px;
-    background-color: var(--header-text);
-    position: relative;
-    transition: all 0.3s ease;
-}
-
-.menu-toggle-icon::before,
-.menu-toggle-icon::after {
-    content: '';
-    position: absolute;
-    width: 24px;
-    height: 2px;
-    background-color: var(--header-text);
-    transition: all 0.3s ease;
-}
-
-.menu-toggle-icon::before {
-    top: -8px;
-}
-
-.menu-toggle-icon::after {
-    bottom: -8px;
-}
-
-/* 모바일 활성화 시 */
-.menu-toggle.active .menu-toggle-icon {
-    background-color: transparent;
-}
-
-.menu-toggle.active .menu-toggle-icon::before {
-    transform: rotate(45deg);
-    top: 0;
-}
-
-.menu-toggle.active .menu-toggle-icon::after {
-    transform: rotate(-45deg);
-    bottom: 0;
-}
-
-/* 반응형 메뉴 */
-@media (max-width: 768px) {
-    .menu-toggle {
-        display: block;
-    }
-
-    .nav-menu {
-        position: fixed;
-        top: var(--nav-height);
-        left: 0;
-        right: 0;
-        background-color: var(--header-bg);
-        flex-direction: column;
-        padding: 20px;
-        gap: 10px;
-        transform: translateY(-100%);
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
-    }
-
-    .main-navigation.active .nav-menu {
-        transform: translateY(0);
-        opacity: 1;
-        visibility: visible;
-    }
-
-    .menu-item {
-        width: 100%;
-    }
-
-    .menu-item a {
-        width: 100%;
-        text-align: center;
-    }
+header.site-header .current-menu-item a:hover,
+header.site-header .current_page_item a:hover,
+header.site-header .current-menu-item > a:hover,
+header.site-header .current_page_item > a:hover {
+    background: var(--purple-dark) !important;
+    border-color: var(--purple-dark) !important;
 }
 
 /* 스크린 리더 전용 */

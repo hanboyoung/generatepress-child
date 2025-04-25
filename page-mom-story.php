@@ -35,7 +35,7 @@ get_header(); ?>
                     <?php              
                     // 이미지형 레이아웃 불러오기
                     get_template_part('template-parts/category/style', 'image', array(
-                        'category_slug' => 'single-mom-story' // 미혼엄마 이야기 카테고리
+                        'category_slug' => 'mom-story-guide' // 미혼엄마 이야기 카테고리
                     ));
                     ?>
                 </div>

@@ -11,17 +11,27 @@ if (!defined('ABSPATH')) exit; // 직접 접근 방지
 function gpc_enqueue_child_styles() {
     $base_uri = get_stylesheet_directory_uri();
     $base_dir = get_stylesheet_directory();
-    // 메인 스타일, 항상 적용
-    wp_enqueue_style('gpc-style', $base_uri . '/style.css', array(), filemtime($base_dir . '/style.css'));
+    
+    // 메인 스타일, 항상 적용 (부모 테마 스타일 의존성 추가)
+    wp_enqueue_style('gpc-style', $base_uri . '/style.css', array('generate-style'), filemtime($base_dir . '/style.css'));
 
     // 공통 컴포넌트 (항상 불러올 것만)
-    $css_components = ['header', 'hero', 'card', 'image', 'tab-menu', 'page', 'pagination', 'tag', 'button', 'list'];
+    $css_components = ['header', 'hero', 'card', 'image', 'page', 'pagination', 'tag', 'button', 'list'];
     foreach ($css_components as $component) {
         $path = "/assets/css/{$component}.css";
         if (file_exists($base_dir . $path)) {
             wp_enqueue_style("gpc-{$component}-style", $base_uri . $path, ['gpc-style'], filemtime($base_dir . $path));
         }
     }
+    
+    // 카테고리 페이지에서만 탭 메뉴 스타일 로드
+    if (is_category()) {
+        $tab_menu_path = "/assets/css/tab-menu.css";
+        if (file_exists($base_dir . $tab_menu_path)) {
+            wp_enqueue_style("gpc-tab-menu-style", $base_uri . $tab_menu_path, ['gpc-style'], filemtime($base_dir . $tab_menu_path));
+        }
+    }
+    
     // 페이지 전용: page-about.css 
     if (is_page()) {
         $slug = get_post_field('post_name', get_post());
@@ -42,17 +52,21 @@ function gpc_enqueue_child_styles() {
             }
         }
     }
-
 }
-add_action('wp_enqueue_scripts', 'gpc_enqueue_child_styles', 99);
+add_action('wp_enqueue_scripts', 'gpc_enqueue_child_styles', 20);
 
-/**S
+/**
  * 부모 테마 주요 액션/필터 제거 (필요한 경우만 유지)
  */
 function gpc_clean_parent_hooks() {
+    // 이미지 관련 훅만 제거 (반응형 관련 훅은 유지)
     remove_action('generate_after_entry_header', 'generate_post_image', 10);
     remove_action('generate_before_content', 'generate_featured_page_header', 10);
+    
+    // 푸터 크레딧 제거
     remove_action('generate_credits', 'generate_add_footer_info', 10);
+    
+    // 중요: 반응형 관련 액션/필터는 제거하지 않음
 }
 add_action('init', 'gpc_clean_parent_hooks');
 
@@ -91,13 +105,6 @@ function gpc_adminbar_position_fix() {
 }
 add_action('wp_head', 'gpc_adminbar_position_fix');
 
-/**
- * 카드형 레이아웃 스타일시트 등록
- */
-function enqueue_card_styles() {
-    wp_enqueue_style('card-style', get_stylesheet_directory_uri() . '/template-parts/css/card.css', array(), '1.0.0');
-}
-add_action('wp_enqueue_scripts', 'enqueue_card_styles');
 
 /**
  * 이미지 그리드 스타일시트 등록
@@ -106,6 +113,60 @@ function enqueue_image_grid_styles() {
     wp_enqueue_style('image-grid-style', get_stylesheet_directory_uri() . '/template-parts/css/image.css', array(), '1.0.0');
 }
 add_action('wp_enqueue_scripts', 'enqueue_image_grid_styles');
+
+/**
+ * 반응형 메뉴 스타일 및 스크립트 등록
+ */
+function gpc_enqueue_responsive_menu() {
+    // Register styles
+    wp_enqueue_style(
+        'gpc-responsive-menu',
+        get_stylesheet_directory_uri() . '/assets/css/responsive-menu.css',
+        array(),
+        filemtime( get_stylesheet_directory() . '/assets/css/responsive-menu.css' )
+    );
+
+    // Register scripts
+    wp_enqueue_script(
+        'gpc-mobile-menu',
+        get_stylesheet_directory_uri() . '/assets/js/mobile-menu.js',
+        array('jquery'),
+        filemtime( get_stylesheet_directory() . '/assets/js/mobile-menu.js' ),
+        true
+    );
+}
+add_action( 'wp_enqueue_scripts', 'gpc_enqueue_responsive_menu' );
+
+/**
+ * GeneratePress 기본 반응형 기능 활성화
+ * 부모 테마의 반응형 기능과 동작을 복원합니다.
+ */
+function gpc_restore_generatepress_responsive() {
+    // GeneratePress 모바일 네비게이션 스크립트 로드
+    if (!wp_script_is('generate-menu', 'enqueued')) {
+        wp_enqueue_script('generate-menu');
+    }
+    
+    // GeneratePress 모바일 반응형 스타일 로드
+    if (!wp_style_is('generate-mobile-style', 'enqueued')) {
+        wp_enqueue_style('generate-mobile-style');
+    }
+    
+    // 부모 테마의 일부 제거된 기능을 복원
+    add_action('wp_footer', function() {
+        if (function_exists('generate_back_to_top')) {
+            generate_back_to_top();
+        }
+    });
+    
+    // GeneratePress 메뉴 관련 클래스 추가
+    add_filter('body_class', function($classes) {
+        $classes[] = 'nav-aligned-center';
+        $classes[] = 'nav-dropdown-mobile';
+        return $classes;
+    });
+}
+add_action('wp_enqueue_scripts', 'gpc_restore_generatepress_responsive', 100);
 
 /**
  * 

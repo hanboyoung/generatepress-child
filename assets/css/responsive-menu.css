@@ -1,0 +1,249 @@
+/**
+ * 반응형 메뉴 스타일 - GeneratePress 호환 버전
+ * 
+ * GeneratePress의 기본 반응형 기능과 함께 사용하도록 수정됨
+ */
+
+/* 
+ * 중요: 이 파일은 GeneratePress의 기본 반응형 기능을 보완하는 용도로 사용됩니다.
+ * 기본 반응형 기능을 방해하지 않도록 일부 스타일만 제공합니다.
+ */
+
+/* 메뉴 토글 버튼 */
+.menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.menu-toggle-icon {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: #333;
+    position: relative;
+    transition: background-color 0.3s;
+}
+
+.menu-toggle-icon:before,
+.menu-toggle-icon:after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: #333;
+    position: absolute;
+    left: 0;
+    transition: all 0.3s;
+}
+
+.menu-toggle-icon:before {
+    top: -8px;
+}
+
+.menu-toggle-icon:after {
+    bottom: -8px;
+}
+
+/* 활성화된 토글 아이콘 스타일 */
+.menu-toggle[aria-expanded="true"] .menu-toggle-icon {
+    background-color: transparent;
+}
+
+.menu-toggle[aria-expanded="true"] .menu-toggle-icon:before {
+    transform: rotate(45deg);
+    top: 0;
+}
+
+.menu-toggle[aria-expanded="true"] .menu-toggle-icon:after {
+    transform: rotate(-45deg);
+    bottom: 0;
+}
+
+/* 드롭다운 토글 버튼 */
+.dropdown-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    top: 5px;
+    z-index: 2;
+}
+
+.dropdown-toggle:after {
+    content: '+';
+    font-size: 20px;
+    color: #333;
+}
+
+.dropdown-toggle[aria-expanded="true"]:after {
+    content: '-';
+}
+
+/* 스크린 리더 전용 텍스트 */
+.screen-reader-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* 기본 네비게이션 스타일 */
+.main-navigation {
+    position: relative;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-menu > li {
+    position: relative;
+}
+
+.nav-menu > li > a {
+    display: block;
+    padding: 15px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+}
+
+.nav-menu .sub-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    min-width: 200px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    list-style: none;
+    margin: 0;
+    padding: 10px 0;
+}
+
+.nav-menu .sub-menu li {
+    width: 100%;
+}
+
+.nav-menu .sub-menu a {
+    padding: 10px 15px;
+    display: block;
+    text-decoration: none;
+    color: #333;
+}
+
+/* 마우스 호버 시 서브메뉴 표시 (데스크톱) */
+.nav-menu > li:hover > .sub-menu {
+    display: block;
+}
+
+/* 반응형 스타일 */
+@media (max-width: 768px) {
+    /* 모바일 헤더 조정 */
+    .inside-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 20px;
+    }
+    
+    /* 메뉴 토글 버튼 위치 조정 */
+    .menu-toggle {
+        padding: 10px;
+        background: transparent;
+        border: none;
+        line-height: 1;
+    }
+    
+    /* 모바일 메뉴 스타일 조정 */
+    .main-navigation.toggled .main-nav {
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* 모바일 서브메뉴 스타일 조정 */
+    .main-navigation .sub-menu {
+        box-shadow: none;
+    }
+    
+    /* 서브메뉴 아이템 들여쓰기 */
+    .main-navigation .sub-menu li {
+        padding-left: 15px;
+    }
+    
+    /* 네비게이션 스타일 변경 */
+    .main-navigation .nav-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background-color: #fff;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        z-index: 9999;
+    }
+    
+    /* 토글 시 메뉴 표시 */
+    .main-navigation.toggled .nav-menu {
+        display: block;
+    }
+    
+    /* 모바일에서 서브메뉴 스타일 변경 */
+    .nav-menu .sub-menu {
+        position: static;
+        box-shadow: none;
+        width: 100%;
+        padding: 0;
+        display: none;
+    }
+    
+    .nav-menu .sub-menu.toggled-on {
+        display: block;
+    }
+    
+    /* 모바일 메뉴 아이템 스타일 */
+    .nav-menu > li {
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .nav-menu > li:last-child {
+        border-bottom: none;
+    }
+    
+    /* 드롭다운 토글 버튼 표시 */
+    .dropdown-toggle {
+        display: block;
+    }
+    
+    /* 마우스 호버 서브메뉴 비활성화 */
+    .nav-menu > li:hover > .sub-menu {
+        display: none;
+    }
+}
+
+/* 작은 모바일 기기 */
+@media (max-width: 480px) {
+    /* 더 작은 화면에 대한 추가 조정 */
+    .site-logo, .site-branding {
+        max-width: 180px;
+    }
+    
+    .nav-menu > li > a {
+        padding: 12px 15px;
+    }
+} 

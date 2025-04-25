@@ -1,0 +1,194 @@
+/**
+ * 카테고리 탭 메뉴 스타일 
+ * 카테고리 페이지에서만 사용되는 스타일
+ */
+
+/* 카테고리 페이지 탭 메뉴 스타일 */
+body.category .tab-navigation {
+    margin-bottom: 30px;
+}
+
+body.category .tab-container {
+    background-color: #f5f5f7;
+    border-radius: 8px;
+    padding: 5px;
+}
+
+body.category .tab-menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+body.category .tab-item {
+    display: inline-block;
+    padding: 8px 16px;
+    font-size: 14px;
+    color: #333;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+body.category .tab-item:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+body.category .tab-item.active {
+    background-color: #fff;
+    color: #333;
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* 카테고리 탭 메뉴의 포스트 카운트 - 범위 제한 */
+body.category .tab-item .post-count {
+    display: inline-block;
+    margin-left: 5px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #6B46C1;
+    background-color: rgba(107, 70, 193, 0.1);
+    padding: 2px 6px;
+    border-radius: 12px;
+}
+
+body.category .tab-item.active .post-count {
+    background-color: rgba(107, 70, 193, 0.15);
+}
+
+/* 카테고리 탭 메뉴 반응형 스타일 */
+@media (max-width: 768px) {
+    body.category .tab-navigation {
+        margin: 0 -20px 30px;
+    }
+    
+    body.category .tab-container {
+        overflow-x: auto;
+        border-radius: 0;
+    }
+    
+    body.category .tab-menu {
+        flex-wrap: nowrap;
+        padding: 5px 20px;
+        width: max-content;
+    }
+    
+    body.category .tab-item {
+        white-space: nowrap;
+    }
+}
+
+/* 탭 메뉴 컨테이너 */
+.category-tab-menu {
+    background: #fff;
+    border-bottom: 1px solid #e5e5e7;
+    margin-bottom: 2rem;
+}
+
+.tab-menu-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* 탭 메뉴 리스트 */
+.tab-menu-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 0.5rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+.tab-menu-list::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
+/* 탭 메뉴 아이템 */
+.tab-menu-item {
+    margin: 0;
+}
+
+.tab-menu-link {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #6e6e73;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.tab-menu-item.active .tab-menu-link {
+    color: #1d1d1f;
+    border-bottom-color: #1d1d1f;
+}
+
+.tab-menu-link:hover {
+    color: #1d1d1f;
+}
+
+/* 포스트 카운트 */
+.post-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.5rem;
+    height: 1.5rem;
+    padding: 0 0.5rem;
+    margin-left: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #fff;
+    background: #6e6e73;
+    border-radius: 1rem;
+}
+
+.tab-menu-item.active .post-count {
+    background: #0071e3;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .tab-menu-link {
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* 다크 모드 */
+@media (prefers-color-scheme: dark) {
+    .category-tab-menu {
+        background: #1d1d1f;
+        border-bottom-color: #2c2c2e;
+    }
+
+    .tab-menu-link {
+        color: #86868b;
+    }
+
+    .tab-menu-item.active .tab-menu-link {
+        color: #f5f5f7;
+        border-bottom-color: #f5f5f7;
+    }
+
+    .tab-menu-link:hover {
+        color: #f5f5f7;
+    }
+
+    .post-count {
+        background: #3a3a3c;
+    }
+
+    .tab-menu-item.active .post-count {
+        background: #0071e3;
+    }
+} 

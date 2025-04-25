@@ -82,8 +82,8 @@ get_header(); ?>
                         'format' => '?paged=%#%',
                         'current' => max(1, $paged),
                         'total' => $custom_query->max_num_pages,
-                        'prev_text' => '이전',
-                        'next_text' => '다음',
+                        'prev_text' => '',
+                        'next_text' => '',
                         'mid_size' => 2,
                         'end_size' => 1,
                     ));
@@ -110,29 +110,44 @@ get_header(); ?>
     color: #6B46C1;
 }
 
+/* 애플 스타일 적용 - 박스 제거하고 구분선 추가 */
 .post-item {
-    border: 1px solid #e6e6e6;
-    border-radius: 8px;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid #e6e6e6;
+    margin-bottom: 0;
+    padding: 25px 0;
 }
 
-.post-item:after {
-    content: "";
-    display: block;
-    clear: both;
+.post-item:first-child {
+    padding-top: 0;
 }
 
+.post-item:last-child {
+    border-bottom: none;
+}
+
+/* 포스트 리스트 스타일 */
 .post-list {
-    border-top: 1px solid #e6e6e6;
-    padding-top: 30px;
+    border-top: none;
+    padding-top: 0;
 }
 
 .post-item + .post-item {
-    margin-top: 24px;
+    margin-top: 0;
 }
 
 .pagination {
     border-top: 1px solid #e6e6e6;
     padding-top: 30px;
+    margin-top: 20px;
+}
+
+/* 컨테이너 스타일 */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 </style>
 

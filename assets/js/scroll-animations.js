@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // 일반 애니메이션 요소들 관찰
-    document.querySelectorAll('.animate-on-scroll:not(.post-card)').forEach(element => {
+    document.querySelectorAll('.animate-on-scroll, .hero-button').forEach(element => {
         fadeUpObserver.observe(element);
     });
 

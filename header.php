@@ -42,17 +42,19 @@ if (!defined('ABSPATH')) {
                 ?>
             </div>
 
-            <nav class="main-navigation">
+            <nav class="main-navigation header-nav">
                 <button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
                     <span class="screen-reader-text">메뉴</span>
-                    <span class="menu-toggle-icon"></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </button>
                 <?php
                 wp_nav_menu(array(
                     'theme_location' => 'primary',
                     'menu_id'        => 'primary-menu',
                     'container'      => false,
-                    'menu_class'     => 'nav-menu',
+                    'menu_class'     => 'nav-menu header-menu',
                     'fallback_cb'    => false,
                 ));
                 ?>
