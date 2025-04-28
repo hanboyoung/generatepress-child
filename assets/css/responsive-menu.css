@@ -125,8 +125,13 @@
         position: fixed;
         top: 0;
         right: -100%;
+<<<<<<< HEAD
         width: 100% !important;
         max-width: none !important;
+=======
+        width: 80%;
+        max-width: 300px;
+>>>>>>> c67b8701cb5503dba20b9d48cacd87dac3637a20
         height: 100vh;
         background-color: #fff;
         flex-direction: column;

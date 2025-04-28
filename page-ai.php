@@ -36,11 +36,7 @@ get_header(); ?>
                 
                 // 카드형 레이아웃 불러오기
                 get_template_part('template-parts/category/style', 'card', array(
-<<<<<<< HEAD
-                    'category_slug' => 'workspace' // 영상편집 카테고리 슬러그 직접 지정
-=======
-                    'category_slug' => 'video-design-guide' // 영상편집 카테고리 슬러그 직접 지정
->>>>>>> c67b8701cb5503dba20b9d48cacd87dac3637a20
+                    'category_slug' => 'ai-automation' // 영상편집 카테고리 슬러그 직접 지정
                 ));
                 ?>
             </div>

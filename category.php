@@ -17,7 +17,11 @@ get_header(); ?>
     
     // 현재 카테고리의 조상 카테고리 확인 (saving-life의 하위 카테고리인지 체크)
     $is_saving_life_child = false;
+<<<<<<< HEAD
     $saving_life_category = get_category_by_slug('news');
+=======
+    $saving_life_category = get_category_by_slug('saving-life');
+>>>>>>> c67b8701cb5503dba20b9d48cacd87dac3637a20
     
     if ($saving_life_category) {
         if ($current_category->term_id == $saving_life_category->term_id) {
@@ -31,11 +35,26 @@ get_header(); ?>
             }
         }
     }
+<<<<<<< HEAD
 
     // 공통 히어로 템플릿 호출
     get_template_part('template-parts/hero');
     ?>
     
+=======
+    ?>
+    
+    <!-- 애플 스타일 히어로 섹션 -->
+    <section class="apple-hero">
+        <div class="apple-hero-container">
+            <h1 class="apple-hero-title"><?php echo esc_html($current_category->name); ?></h1>
+            <?php if ($current_category->description) : ?>
+                <p class="apple-hero-description"><?php echo wp_kses_post($current_category->description); ?></p>
+            <?php endif; ?>
+        </div>
+    </section>
+
+>>>>>>> c67b8701cb5503dba20b9d48cacd87dac3637a20
     <div id="primary" class="content-area">
         <main id="main" class="site-main">
             <div class="container">
@@ -48,6 +67,7 @@ get_header(); ?>
                             'parent_category' => $main_category->term_id
                         ));
                         
+<<<<<<< HEAD
                         // WP_Query 인수 설정 (현재 카테고리 및 하위 카테고리 포함)
                         $args = array(
                             'tax_query' => array(
@@ -59,6 +79,12 @@ get_header(); ?>
                                 ),
                             ),
                             'posts_per_page' => 5, // 한 페이지에 5개의 포스트
+=======
+                        // WP_Query 인수 설정
+                        $args = array(
+                            'cat' => $current_category->term_id,
+                            'posts_per_page' => 10, // 한 페이지에 10개의 포스트
+>>>>>>> c67b8701cb5503dba20b9d48cacd87dac3637a20
                             'orderby' => 'date',
                             'order' => 'DESC',
                             'paged' => get_query_var('paged') ? get_query_var('paged') : 1
@@ -69,7 +95,11 @@ get_header(); ?>
                         
                         // 리스트형 레이아웃 불러오기
                         get_template_part('template-parts/category/style', 'list', array(
+<<<<<<< HEAD
                             'category_slug' => 'news',
+=======
+                            'category_slug' => 'saving-life',
+>>>>>>> c67b8701cb5503dba20b9d48cacd87dac3637a20
                             'custom_query' => $custom_query
                         ));
                         
@@ -131,4 +161,117 @@ get_header(); ?>
     </div>
 </div>
 
+<<<<<<< HEAD
+=======
+<style>
+/* 애플 스타일 히어로 섹션 */
+.apple-hero {
+    padding: 120px 20px 40px;
+    text-align: center;
+    background-color: #fff;
+}
+
+.apple-hero-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.apple-hero-title {
+    font-size: 56px;
+    line-height: 1.1;
+    font-weight: 700;
+    color: #1d1d1f;
+    margin-bottom: 20px;
+    letter-spacing: -0.015em;
+}
+
+.apple-hero-description {
+    font-size: 21px;
+    line-height: 1.5;
+    font-weight: 400;
+    color: #6e6e73;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* 애플 스타일 페이지네이션 */
+.apple-pagination {
+    margin: 40px 0;
+    text-align: center;
+    font-size: 15px;
+}
+
+.apple-pagination .page-numbers {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 4px;
+    padding: 8px 12px;
+    color: #1d1d1f;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: all 0.2s ease;
+}
+
+.apple-pagination a.page-numbers:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.apple-pagination .page-numbers.current {
+    background-color: #000;
+    color: #fff;
+}
+
+.apple-pagination .prev-icon,
+.apple-pagination .next-icon {
+    font-size: 14px;
+    display: inline-block;
+    margin: 0 2px;
+}
+
+.apple-pagination .nav-links {
+    display: inline-flex;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .apple-hero {
+        padding: 80px 20px 30px;
+    }
+    
+    .apple-hero-title {
+        font-size: 40px;
+    }
+    
+    .apple-hero-description {
+        font-size: 18px;
+    }
+    
+    .apple-pagination .page-numbers {
+        padding: 6px 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .apple-hero {
+        padding: 60px 20px 20px;
+    }
+    
+    .apple-hero-title {
+        font-size: 32px;
+    }
+    
+    .apple-hero-description {
+        font-size: 16px;
+    }
+    
+    .apple-pagination .page-numbers {
+        padding: 6px 10px;
+        font-size: 14px;
+        margin: 0 2px;
+    }
+}
+</style>
+
+>>>>>>> c67b8701cb5503dba20b9d48cacd87dac3637a20
 <?php get_footer(); ?> 

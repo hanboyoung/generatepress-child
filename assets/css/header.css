@@ -84,11 +84,15 @@
     color: var(--header-text);
     text-decoration: none;
     font-weight: 500;
+<<<<<<< HEAD
     font-size: 16px;
     padding: 8px 0;
     transition: color 0.3s ease;
     display: inline-block;
     position: relative;
+=======
+    transition: color 0.3s ease;
+>>>>>>> c67b8701cb5503dba20b9d48cacd87dac3637a20
 }
 
 .nav-menu a:hover, .header-menu a:hover {
@@ -109,7 +113,18 @@
 .header-menu .current-menu-item > a::after,
 .nav-menu .current-menu-ancestor > a::after, 
 .header-menu .current-menu-ancestor > a::after {
+<<<<<<< HEAD
     content: none !important;
+=======
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--purple-base);
+    border-radius: 2px;
+>>>>>>> c67b8701cb5503dba20b9d48cacd87dac3637a20
 }
 
 /* Menu Toggle Button */
@@ -311,6 +326,7 @@ header.site-header .menu-item > a {
     white-space: nowrap !important;
 }
 
+<<<<<<< HEAD
 /* 호버 효과 개선 */
 header.site-header .menu-item a:hover,
 header.site-header .menu-item > a:hover {
@@ -327,6 +343,8 @@ header.site-header .current-menu-item > a {
     box-shadow: var(--button-hover-shadow) !important;
 }
 
+=======
+>>>>>>> c67b8701cb5503dba20b9d48cacd87dac3637a20
 /* 모바일에서는 다른 스타일 적용 */
 @media (max-width: 768px) {
     header.site-header .header-menu {
