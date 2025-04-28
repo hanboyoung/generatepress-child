@@ -1,0 +1,216 @@
+/**
+ * 반응형 메뉴 스타일 - GeneratePress 호환 버전
+ * 
+ * GeneratePress의 기본 반응형 기능과 함께 사용하도록 수정됨
+ */
+
+/* 
+ * 중요: 이 파일은 GeneratePress의 기본 반응형 기능을 보완하는 용도로 사용됩니다.
+ * 기본 반응형 기능을 방해하지 않도록 일부 스타일만 제공합니다.
+ */
+
+/* 메뉴 토글 버튼 */
+.menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    outline: none;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 24px;
+    height: 3px;
+    background-color: var(--header-text, #333);
+    margin: 5px 0;
+    transition: all 0.3s ease;
+}
+
+/* 활성화된 토글 아이콘 스타일 */
+.menu-toggle.toggled span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.toggled span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 6px);
+}
+
+.menu-toggle.toggled span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -6px);
+}
+
+/* 스크린 리더 전용 텍스트 */
+.screen-reader-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* 기본 네비게이션 스타일 */
+.main-navigation {
+    position: relative;
+}
+
+.nav-menu, .header-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-menu > li, .header-menu > li {
+    position: relative;
+}
+
+.nav-menu > li > a, .header-menu > li > a {
+    display: block;
+    text-decoration: none;
+}
+
+.nav-menu .sub-menu, .header-menu .sub-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    min-width: 200px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    list-style: none;
+    margin: 0;
+    padding: 10px 0;
+}
+
+.nav-menu .sub-menu li, .header-menu .sub-menu li {
+    width: 100%;
+}
+
+.nav-menu .sub-menu a, .header-menu .sub-menu a {
+    padding: 10px 15px;
+    display: block;
+    text-decoration: none;
+}
+
+/* 마우스 호버 시 서브메뉴 표시 (데스크톱) */
+.nav-menu > li:hover > .sub-menu, 
+.header-menu > li:hover > .sub-menu {
+    display: block;
+}
+
+/* 반응형 스타일 */
+@media (max-width: 768px) {
+    /* 메뉴 토글 버튼 표시 */
+    .menu-toggle {
+        display: block;
+    }
+    
+    /* 모바일 헤더 조정 */
+    .inside-header, .header-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 20px;
+    }
+    
+    /* 네비게이션 스타일 변경 */
+    .main-navigation .nav-menu,
+    .main-navigation .header-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 100% !important;
+        max-width: none !important;
+        height: 100vh;
+        background-color: #fff;
+        flex-direction: column;
+        padding: 80px 20px 20px;
+        transition: right 0.3s ease;
+        z-index: 998;
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+        margin: 0;
+    }
+    
+    /* 토글 시 메뉴 표시 */
+    .main-navigation.toggled .nav-menu,
+    .main-navigation.toggled .header-menu {
+        right: 0;
+        display: flex !important;
+    }
+    
+    /* 모바일에서 메뉴 아이템 스타일 */
+    .nav-menu > li, .header-menu > li {
+        margin: 15px 0;
+        width: 100%;
+    }
+    
+    /* 모바일에서 서브메뉴 스타일 변경 */
+    .nav-menu .sub-menu,
+    .header-menu .sub-menu {
+        position: static;
+        box-shadow: none;
+        width: 100%;
+        display: none;
+        padding: 0 0 0 15px;
+        background: transparent;
+    }
+    
+    .nav-menu .sub-menu.toggled-on,
+    .header-menu .sub-menu.toggled-on {
+        display: block;
+    }
+    
+    /* 모바일 메뉴 아이템 스타일 */
+    .nav-menu > li,
+    .header-menu > li {
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .nav-menu > li:last-child,
+    .header-menu > li:last-child {
+        border-bottom: none;
+    }
+    
+    /* 마우스 호버 서브메뉴 비활성화 */
+    .nav-menu > li:hover > .sub-menu,
+    .header-menu > li:hover > .sub-menu {
+        display: none;
+    }
+    
+    /* GeneratePress 메뉴 호환성 */
+    header.site-header .menu-item a,
+    header.site-header .menu-item > a {
+        padding: 8px 0 !important;
+        height: auto !important;
+        border: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+        justify-content: flex-start !important;
+        white-space: normal !important;
+    }
+}
+
+/* 작은 모바일 기기 */
+@media (max-width: 480px) {
+    /* 더 작은 화면에 대한 추가 조정 */
+    .site-logo, .site-branding {
+        max-width: 180px;
+    }
+    
+    .nav-menu > li > a, 
+    .header-menu > li > a {
+        padding: 12px 15px;
+    }
+    
+    .main-navigation .nav-menu,
+    .main-navigation .header-menu {
+        width: 85%;
+        padding: 80px 15px 15px;
+    }
+} 

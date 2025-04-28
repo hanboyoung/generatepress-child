@@ -1,0 +1,216 @@
+/* ==================================================================================
+ * ⚠️ 경고: 이 파일은 현재 프로덕션에서 사용 중인 완성된 버전입니다!
+ * 🚫 직접 수정하지 마세요!
+ * 
+ * 최종 수정일: 2024-04-18
+ * 버전: 1.0.0
+ * 
+ * 새로운 버튼 스타일이 필요한 경우:
+ * 1. 이 파일을 복사하여 새로운 이름으로 저장
+ * 2. 새로운 파일에서 작업을 진행해 주세요
+ * ================================================================================== */
+
+.button {
+    background-color: var(--purple-base);
+    color: #fff;
+    width: 8.5em;
+    height: 2.9em;
+    border: var(--purple-dark) 0.2em solid;
+    border-radius: 11px;
+    text-align: right;
+    transition: all 0.6s ease;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 1.5em;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.button:hover {
+    background-color: var(--purple-dark);
+    cursor: pointer;
+}
+
+.button svg {
+    width: 1.6em;
+    margin: -0.2em 0.8em 1em;
+    position: absolute;
+    display: flex;
+    transition: all 0.6s ease;
+    color: #fff;
+}
+
+.button:hover svg {
+    transform: translateX(5px);
+}
+
+.text {
+    margin: 0 1.5em;
+}
+
+.btn-style1 { /* 스타일1 */ }
+.btn-style2 { /* 스타일2 */ }
+.btn-modern { /* 모던 스타일 */ }
+.btn-minimal { /* 미니멀 스타일 */ }
+
+/* 기본 버튼 스타일 */
+.gpc-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border-radius: 980px;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+/* 프라이머리 버튼 */
+.gpc-button-primary {
+    background: var(--purple-base, #6E45E2);
+    color: #fff;
+}
+
+.gpc-button-primary:hover {
+    background: var(--purple-dark, #5B35D5);
+    transform: translateY(-2px);
+}
+
+/* 세컨더리 버튼 */
+.gpc-button-secondary {
+    border: 1px solid var(--purple-base, #6E45E2);
+    color: var(--purple-base, #6E45E2);
+    background: transparent;
+}
+
+.gpc-button-secondary:hover {
+    background: var(--purple-ultra-light, #F6F2FF);
+    transform: translateY(-2px);
+}
+
+/* 히어로 버튼 */
+.gpc-hero-button {
+    padding: 18px 35px;
+    font-size: 20px;
+}
+
+/* 더보기 버튼 */
+.gpc-read-more {
+    align-self: flex-start;
+    padding: 12px 24px;
+    background: var(--purple-base, #6E45E2);
+    color: #fff;
+    border-radius: 980px;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.gpc-read-more:hover {
+    background: var(--purple-dark, #5B35D5);
+    transform: translateY(-2px);
+}
+
+/* 카테고리 버튼 */
+.gpc-category-button {
+    background-color: var(--background-primary, #fff);
+    color: var(--text-primary, #1d1d1f);
+    padding: 8px 18px;
+    border-radius: 980px;
+    font-size: 15px;
+    font-weight: 500;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.gpc-category-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        to bottom right,
+        #4A72E5 0%,
+        #6E8AFF 100%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.gpc-category-button:hover::before,
+.gpc-category-button.active::before {
+    opacity: 1;
+}
+
+.gpc-category-button span {
+    position: relative;
+    z-index: 2;
+}
+
+.gpc-category-button:hover,
+.gpc-category-button.active {
+    color: #fff;
+    border-color: transparent;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 11px rgba(74, 114, 229, 0.35);
+}
+
+/* 모바일 대응 */
+@media (max-width: 768px) {
+    .gpc-button {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    .gpc-hero-button {
+        padding: 14px 28px;
+        font-size: 18px;
+    }
+
+    .gpc-category-button {
+        padding: 6px 14px;
+        font-size: 14px;
+    }
+}
+
+/* Universe.io 스타일 버튼 - gharsh11032000 스타일 */
+.btn-universe {
+    padding: 15px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    border: 2px solid #414141;
+    color: #414141;
+    background-color: transparent;
+    cursor: pointer;
+    border-radius: 10px;
+    text-transform: uppercase;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-universe:hover {
+    border-color: #4A72E5;
+    box-shadow: 0 0 20px rgba(74, 114, 229, 0.8);
+    background: #4A72E5;
+    color: white;
+}
+
+.btn-universe:active {
+    box-shadow: 0 0 10px rgba(74, 114, 229, 0.4);
+}
+
+/* 현재 활성화된 메뉴 아이템 */
+.current-menu-item .btn-universe {
+    border-color: #4A72E5;
+    background: #4A72E5;
+    color: white;
+    box-shadow: 0 0 20px rgba(74, 114, 229, 0.8);
+} 

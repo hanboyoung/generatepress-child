@@ -1,0 +1,382 @@
+/* ==================================================================================
+ * ⚠️ 경고: 이 파일은 현재 프로덕션에서 사용 중인 완성된 버전입니다!
+ * 🚫 직접 수정하지 마세요!
+ * 
+ * 최종 수정일: 2024-04-18
+ * 버전: 1.0.0
+ * 
+ * 새로운 태그 스타일이 필요한 경우:
+ * 1. 이 파일을 복사하여 새로운 이름으로 저장
+ * 2. 새로운 파일에서 작업을 진행해 주세요
+ * ================================================================================== */
+
+/* ==========================================================================
+   태그 스타일
+   ========================================================================== */
+
+/* 태그 버튼 */
+.tags-links a,
+.tag-button {
+    display: inline-block;
+    padding: 8px 16px;
+    margin: 0 8px 8px 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    background-color: #f8f8f8;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.tags-links a:hover,
+.tag-button:hover {
+    color: #fff;
+    background-color: #0073aa;
+    border-color: #0073aa;
+    transform: translateY(-1px);
+}
+
+/* 현재 선택된 태그 */
+.tags-links a.active,
+.tag-button.active {
+    color: #fff;
+    background-color: #0073aa;
+    border-color: #0073aa;
+}
+
+/* 태그 컨테이너 */
+.tags-container {
+    margin: 0 0;
+    padding-bottom: 0px;
+    background-color: #fff;
+}
+
+.tags-title {
+    margin-bottom: 0px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+    .tags-links a,
+    .tag-button {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+
+    .tags-container {
+        padding: 15px;
+    }
+
+    .tags-title {
+        font-size: 16px;
+    }
+}
+
+/* 태그 스타일 */
+
+/* 태그 컨테이너 */
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 0px;
+}
+
+.featured-section .tags-container {
+    margin-bottom: 16px;
+}
+
+/* 기본 태그 스타일 */
+.category-tag {
+    display: inline-flex;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 20px;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.category-tag:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.featured-section .category-tag {
+    font-size: 14px;
+    font-weight: 700;
+    padding: 5px 14px;
+}
+
+/* ============ 태그 색상 - 애플 스타일 적용 ============ */
+
+/* 모든 태그에 기본 스타일 적용 */
+span.category-tag {
+    background: linear-gradient(135deg, rgba(0,0,0,0.1), rgba(0,0,0,0.05));
+}
+
+/* 미혼엄마 이야기 */
+span.category-tag.category-tag-single-mom-story,
+span.category-tag.category-tag-미혼-엄마-이야기 {
+    background: linear-gradient(135deg, #FF6B6B, #FF8E8E);
+    color: #fff;
+}
+
+/* 미혼모 */
+span.category-tag.category-tag-single-mom,
+span.category-tag.category-tag-미혼모 {
+    background: linear-gradient(135deg, #FF8E8E, #FFB7B2);
+    color: #fff;
+}
+
+/* 경매 */
+span.category-tag.category-tag-auction,
+span.category-tag.category-tag-경매 {
+    background: linear-gradient(135deg, #6E45E2, #8A67E8);
+    color: #fff;
+}
+
+/* 부동산 */
+span.category-tag.category-tag-real-estate,
+span.category-tag.category-tag-부동산 {
+    background: linear-gradient(135deg, #8A67E8, #A284EA);
+    color: #fff;
+}
+
+/* 재테크 */
+span.category-tag.category-tag-finance-tips,
+span.category-tag.category-tag-재테크 {
+    background: linear-gradient(135deg, #5B35D5, #6E45E2);
+    color: #fff;
+}
+
+/* 절약꿀팁 */
+span.category-tag.category-tag-saving-hacks,
+span.category-tag.category-tag-절약꿀팁 {
+    background: linear-gradient(135deg, #6BA7E8, #8BBEED);
+    color: #fff;
+}
+
+/* 부수입 */
+span.category-tag.category-tag-side-income,
+span.category-tag.category-tag-부수입 {
+    background: linear-gradient(135deg, #00B4D8, #48CAE4);
+    color: #fff;
+}
+
+/* 해외주식 */
+span.category-tag.category-tag-overseas-investment,
+span.category-tag.category-tag-해외주식 {
+    background: linear-gradient(135deg, #4A90E2, #6BA7E8);
+    color: #fff;
+}
+
+/* 경제뉴스 */
+span.category-tag.category-tag-economic-news,
+span.category-tag.category-tag-경제뉴스 {
+    background: linear-gradient(135deg, #2ECC71, #4ED789);
+    color: #fff;
+}
+
+/* 복지신청 */
+span.category-tag.category-tag-welfare-apply,
+span.category-tag.category-tag-복지신청 {
+    background: linear-gradient(135deg, #4ED789, #6ED99E);
+    color: #fff;
+}
+
+/* 바우처 */
+span.category-tag.category-tag-benefit-voucher,
+span.category-tag.category-tag-바우처 {
+    background: linear-gradient(135deg, #6ED99E, #8EE3B3);
+    color: #fff;
+}
+
+/* 매입임대주택 */
+span.category-tag.category-tag-rental-housing,
+span.category-tag.category-tag-매입임대주택 {
+    background: linear-gradient(135deg, #FFD700, #FFE44D);
+    color: #333;
+    text-shadow: 0 1px 1px rgba(255,255,255,0.5);
+}
+
+/* 민간지원사업 */
+span.category-tag.category-tag-private-support,
+span.category-tag.category-tag-민간지원사업 {
+    background: linear-gradient(135deg, #FFA07A, #FFB59A);
+    color: #fff;
+}
+
+/* 정부지원금 */
+span.category-tag.category-tag-gov-support,
+span.category-tag.category-tag-정부지원금 {
+    background: linear-gradient(135deg, #FF6B6B, #FF8E8E);
+    color: #fff;
+}
+
+/* 무료나눔 */
+span.category-tag.category-tag-free-sharing,
+span.category-tag.category-tag-무료나눔 {
+    background: linear-gradient(135deg, #FF8E8E, #FFB7B2);
+    color: #fff;
+}
+
+/* AI */
+span.category-tag.category-tag-ai,
+span.category-tag.category-tag-AI {
+    background: linear-gradient(135deg, #95A5A6, #BDC3C7);
+    color: #fff;
+}
+
+/* ChatGPT */
+span.category-tag.category-tag-chatgpt,
+span.category-tag.category-tag-ChatGPT {
+    background: linear-gradient(135deg, #BDC3C7, #D5DBDB);
+    color: #333;
+    text-shadow: 0 1px 1px rgba(255,255,255,0.5);
+}
+
+/* 영상편집 */
+span.category-tag.category-tag-video-editing,
+span.category-tag.category-tag-영상편집 {
+    background: linear-gradient(135deg, #E84393, #F06292);
+    color: #fff;
+}
+
+/* 워드프레스 */
+span.category-tag.category-tag-wordpress,
+span.category-tag.category-tag-워드프레스 {
+    background: linear-gradient(135deg, #B8A5F3, #D4C5F3);
+    color: #fff;
+}
+
+/* 유튜브 */
+span.category-tag.category-tag-youtube,
+span.category-tag.category-tag-유튜브 {
+    background: linear-gradient(135deg, #FF0000, #FF3333);
+    color: #fff;
+}
+
+/* 문제해결 */
+span.category-tag.category-tag-problem-solving,
+span.category-tag.category-tag-문제해결 {
+    background: linear-gradient(135deg, #9B6EF3, #B8A5F3);
+    color: #fff;
+}
+
+/* 오류대처법 */
+span.category-tag.category-tag-error-fix,
+span.category-tag.category-tag-오류대처법 {
+    background: linear-gradient(135deg, #6C7A89, #95A5A6);
+    color: #fff;
+}
+
+/* LH주택공사 */
+span.category-tag.category-tag-lh,
+span.category-tag.category-tag-lh주택공사 {
+    background: linear-gradient(135deg, #00B4D8, #48CAE4);
+    color: #fff;
+}
+
+/* 리소스 */
+span.category-tag.category-tag-resource,
+span.category-tag.category-tag-리소스 {
+    background: linear-gradient(135deg, #4ED789, #6ED99E);
+    color: #fff;
+}
+
+/* 기타 */
+span.category-tag.category-tag-etc-info,
+span.category-tag.category-tag-기타 {
+    background: linear-gradient(135deg, #BDC3C7, #D5DBDB);
+    color: #333;
+    text-shadow: 0 1px 1px rgba(255,255,255,0.5);
+}
+
+/* 저작권 */
+span.category-tag.category-tag-copyright,
+span.category-tag.category-tag-저작권 {
+    background: linear-gradient(135deg, #FF6B6B, #FF8E8E);
+    color: #fff;
+}
+
+/* 국가정책 */
+span.category-tag.category-tag-national-policy,
+span.category-tag.category-tag-국가정책 {
+    background: linear-gradient(135deg, #4D28BD, #5B35D5);
+    color: #fff;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .tags-container {
+        gap: 6px;
+        margin-bottom: 10px;
+    }
+    
+    .category-tag {
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+}
+
+/* 밝은 배경색 태그를 위한 특별 스타일 */
+.category-tag.category-tag-노후준비,
+.category-tag.category-tag-연금저축,
+.category-tag.category-tag-매입임대주택,
+.category-tag.category-tag-ChatGPT,
+.category-tag.category-tag-기타 {
+    color: #1d1d1f;
+    text-shadow: none;
+    background: #f5f5f7 !important;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    font-weight: 600;
+}
+
+.category-tag.category-tag-노후준비:hover,
+.category-tag.category-tag-연금저축:hover,
+.category-tag.category-tag-매입임대주택:hover,
+.category-tag.category-tag-ChatGPT:hover,
+.category-tag.category-tag-기타:hover {
+    background: #e5e5e7 !important;
+    border-color: rgba(0, 0, 0, 0.15);
+}
+
+/* 태그 색상 변형 */
+.category-tag-news {
+    background: #007AFF;
+}
+
+.category-tag-story {
+    background: #FF2D55;
+}
+
+.category-tag-support {
+    background: #5856D6;
+}
+
+.category-tag-event {
+    background: #FF9500;
+}
+
+.category-tag-notice {
+    background: #4CD964;
+}
+
+/* 반응형 스타일 */
+@media (max-width: 734px) {
+    .category-tag {
+        font-size: 11px;
+        padding: 4px 10px;
+    }
+} 

@@ -1,0 +1,393 @@
+/*
+Theme Name: GeneratePress Child
+Theme URI: https://generatepress.com
+Template: generatepress
+Author: Tom Usborne
+Author URI: https://tomusborne.com
+Description: A lightweight and powerful theme that makes building websites easy and fun.
+Version: 1.0.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: generatepress-child
+*/
+
+/* ==================================================================================
+ * ⚠️ 경고: 이 파일은 현재 프로덕션에서 사용 중인 완성된 버전입니다!
+ * 🚫 직접 수정하지 마세요!
+ * 
+ * 최종 수정일: 2024-04-18
+ * 버전: 1.0.0
+ * 
+ * 새로운 스타일이 필요한 경우:
+ * 1. 이 파일을 복사하여 새로운 이름으로 저장
+ * 2. 새로운 파일에서 작업을 진행해 주세요
+ * ================================================================================== */
+
+/* ==========================================================================
+   기본 스타일 오버라이드
+   ========================================================================== */
+
+/* 기본 색상 변수 */
+:root {
+    --background-primary: #ffffff;
+    --background-secondary: #f5f5f7;
+    --text-primary: #1d1d1f;
+    --text-secondary: #6e6e73;
+    --accent-color: #6E45E2;
+    --border-color: rgba(0, 0, 0, 0.1);
+    
+    /* 색상 */
+    --purple-base: #6E45E2;
+    --purple-dark: #5B35D5;
+    --purple-light: #8A67E8;
+    --purple-ultra-light: #F6F2FF;
+    
+    /* 기타 */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.1);
+
+    /* 페이지네이션 */
+    --pagination-background: var(--background-secondary);
+    --pagination-text: var(--text-primary);
+    --pagination-active-background: var(--accent-color);
+    --pagination-active-text: var(--text-on-accent);
+    --pagination-hover-background: var(--accent-color-light);
+    --pagination-hover-text: var(--text-primary);
+}
+
+/* 브라우저 기본 스타일 초기화 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* 한국어 최적화 */
+:lang(ko) {
+    word-break: keep-all;
+    word-wrap: break-word;
+}
+
+:lang(ja), :lang(ko), :lang(th), :lang(zh) {
+    font-style: normal;
+}
+
+/* 기본 레이아웃 */
+#page {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 푸터 스타일 */
+.site-footer {
+    background: var(--background-secondary);
+    padding: 40px 0;
+    margin-top: auto;
+}
+
+/* 기본 폰트 설정 */
+@font-face {
+    font-family: 'Freesentation';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-1Thin.woff2') format('woff2');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Freesentation';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-3Light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Freesentation';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-5Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Freesentation';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-7Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Freesentation';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-9Black.woff2') format('woff2');
+    font-weight: 900;
+    font-style: normal;
+}
+
+/* 전역 폰트 적용 */
+body,
+button,
+input,
+select,
+textarea,
+.site-title,
+.entry-title,
+h1, h2, h3, h4, h5, h6,
+.main-navigation,
+.menu-item,
+.site-description,
+.widget-title,
+.post-title,
+.page-title {
+    font-family: 'Freesentation', sans-serif !important;
+    font-weight: 300;
+}
+
+/* 제목 요소들의 기본 굵기 설정 */
+h1, .h1 { font-weight: 900; }
+h2, .h2 { font-weight: 700; }
+h3, .h3 { font-weight: 500; }
+h4, .h4 { font-weight: 500; }
+h5, .h5 { font-weight: 300; }
+h6, .h6 { font-weight: 300; }
+
+/* 기본 링크 스타일 */
+a {
+    color: var(--purple-base);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: var(--purple-dark);
+}
+
+/* 이미지 기본 스타일 */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* 커버 이미지 공통 스타일 */
+.cover-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* 이미지 호버 트랜지션 공통 스타일 */
+.image-hover-zoom {
+    transition: transform 0.5s cubic-bezier(0.42, 0, 0.58, 1);
+}
+
+.image-hover-zoom:hover {
+    transform: scale(1.03);
+}
+
+/* 애플 스타일 탭 메뉴 */
+.apple-tabs {
+    width: 100%;
+    margin: 0 auto 40px;
+    border-bottom: 1px solid #d2d2d7;
+    position: relative;
+}
+
+.apple-tabs-nav {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 32px;
+    justify-content: center;
+}
+
+.apple-tabs-nav li {
+    margin: 0;
+    padding: 0;
+}
+
+.apple-tabs-nav a {
+    display: inline-block;
+    color: #1d1d1f;
+    text-decoration: none;
+    font-size: 17px;
+    line-height: 1.47059;
+    font-weight: 400;
+    padding: 8px 0;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.apple-tabs-nav a:hover {
+    color: var(--purple-base);
+}
+
+.apple-tabs-nav a.active {
+    color: var(--purple-base);
+}
+
+.apple-tabs-nav a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--purple-base);
+}
+
+@media (max-width: 734px) {
+    .apple-tabs-nav {
+        gap: 20px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 0 16px;
+    }
+    
+    .apple-tabs-nav::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .apple-tabs {
+        margin-bottom: 30px;
+    }
+}
+
+/* 애플 뉴스룸 스타일 리스트 레이아웃 */
+.news-list-container {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.news-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.news-item {
+    padding: 40px 0;
+    border-bottom: 1px solid #d2d2d7;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 30px;
+    text-decoration: none;
+}
+
+.news-item:hover .news-title {
+    color: var(--purple-base);
+}
+
+.news-image {
+    width: 280px;
+    height: 180px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.news-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.news-item:hover .news-image img {
+    transform: scale(1.02);
+}
+
+.news-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.news-category {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #6e6e73;
+    margin-bottom: 6px;
+}
+
+.news-title {
+    font-size: 24px;
+    line-height: 1.3;
+    font-weight: 500;
+    color: #1d1d1f;
+    margin: 0 0 8px;
+    transition: color 0.3s ease;
+}
+
+.news-date {
+    font-size: 14px;
+    color: #6e6e73;
+}
+
+/* 필터 스타일 */
+.filter-bar {
+    background: #f5f5f7;
+    padding: 20px 0;
+    margin-bottom: 40px;
+}
+
+.filter-container {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.filter-label {
+    color: #1d1d1f;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.filter-select {
+    appearance: none;
+    background: #fff;
+    border: 1px solid #d2d2d7;
+    border-radius: 6px;
+    padding: 8px 32px 8px 12px;
+    font-size: 14px;
+    color: #1d1d1f;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h10L5 6z' fill='%23666'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    min-width: 140px;
+}
+
+.filter-select:hover {
+    border-color: #b0b0b0;
+}
+
+@media (max-width: 734px) {
+    .news-item {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 30px 0;
+    }
+
+    .news-image {
+        width: 100%;
+        height: 200px;
+    }
+
+    .filter-container {
+        flex-wrap: wrap;
+    }
+
+    .filter-select {
+        flex: 1;
+        min-width: 0;
+    }
+} 
