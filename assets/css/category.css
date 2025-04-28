@@ -44,13 +44,9 @@ body.page .page-header {
 
 /* 컨테이너 */
 .container {
-<<<<<<< HEAD
     width: 1200px !important;
     max-width: none !important;
-=======
     max-width: 1000px;
->>>>>>> c67b8701cb5503dba20b9d48cacd87dac3637a20
-    margin: 0 auto;
     padding: 0 20px;
 }
 
@@ -456,7 +452,6 @@ body.page .page-header {
     .category-title {
         font-size: 24px;
     }
-<<<<<<< HEAD
 }
 
 /* 카테고리 페이지 메인 & 사이드바 레이아웃 */
@@ -508,6 +503,4 @@ body.page .page-header {
 }
 .category-sidebar.widget-area .widget_categories ul li a:hover {
     text-decoration: underline;
-=======
->>>>>>> c67b8701cb5503dba20b9d48cacd87dac3637a20
 } 

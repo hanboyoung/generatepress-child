@@ -16,7 +16,6 @@ $query_args = array(
     'posts_per_page' => 9,
     'paged' => $paged,
     'orderby' => 'date',
-<<<<<<< HEAD
     'order' => 'DESC',
     'tax_query' => array(
         array(
@@ -28,16 +27,6 @@ $query_args = array(
     ),
 );
 
-=======
-    'order' => 'DESC'
-);
-
-// 특정 카테고리가 지정된 경우에만 카테고리 필터 추가
-if ($category) {
-    $query_args['cat'] = $category->term_id;
-}
-
->>>>>>> c67b8701cb5503dba20b9d48cacd87dac3637a20
 // 새로운 쿼리 실행
 $card_query = new WP_Query($query_args);
 
