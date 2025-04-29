@@ -1,48 +1,31 @@
 <?php
 /**
- * 카테고리 아카이브 템플릿
- *
+ * 공통 카테고리 아카이브 템플릿 (애플 스타일)
  * @package GeneratePress-child
  */
 
-// 카테고리 스타일 로드
-wp_enqueue_style('category-style', get_stylesheet_directory_uri() . '/assets/css/category.css', array(), '1.0.0');
+if (!defined('ABSPATH')) exit;
 
 get_header(); ?>
 
 <div id="page" class="site">
-    <?php
-    // 현재 카테고리 정보
-    $current_category = get_queried_object();
-    
-    // 현재 카테고리의 조상 카테고리 확인 (saving-life의 하위 카테고리인지 체크)
-    $is_saving_life_child = false;
-    $saving_life_category = get_category_by_slug('news');
-    $saving_life_category = get_category_by_slug('saving-life');
-    
-    if ($saving_life_category) {
-        if ($current_category->term_id == $saving_life_category->term_id) {
-            $is_saving_life_child = true;
-            $main_category = $saving_life_category;
-        } else {
-            $ancestors = get_ancestors($current_category->term_id, 'category');
-            if (in_array($saving_life_category->term_id, $ancestors)) {
-                $is_saving_life_child = true;
-                $main_category = $saving_life_category;
-            }
-        }
-    }
+    <section class="category-hero">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="<?php echo esc_url(home_url('/')); ?>">홈</a> › 
+                <?php
+                $ancestors = get_ancestors(get_queried_object_id(), 'category');
+                $ancestors = array_reverse($ancestors);
+                foreach ($ancestors as $ancestor) {
+                    echo '<a href="' . esc_url(get_category_link($ancestor)) . '">' . esc_html(get_cat_name($ancestor)) . '</a> › ';
+                }
+                ?>
+                <span><?php single_cat_title(); ?></span>
+            </div>
 
-    // 공통 히어로 템플릿 호출
-    get_template_part('template-parts/hero');
-    ?>
-    
-    <!-- 애플 스타일 히어로 섹션 -->
-    <section class="apple-hero">
-        <div class="apple-hero-container">
-            <h1 class="apple-hero-title"><?php echo esc_html($current_category->name); ?></h1>
-            <?php if ($current_category->description) : ?>
-                <p class="apple-hero-description"><?php echo wp_kses_post($current_category->description); ?></p>
+            <h1 class="category-title"><?php single_cat_title(); ?></h1>
+            <?php if (category_description()) : ?>
+                <p class="category-description"><?php echo category_description(); ?></p>
             <?php endif; ?>
         </div>
     </section>
@@ -51,90 +34,44 @@ get_header(); ?>
         <main id="main" class="site-main">
             <div class="container">
                 <?php if (have_posts()) : ?>
-                    <?php
-                    // saving-life 관련 카테고리인 경우 해당 탭 메뉴 표시
-                    if ($is_saving_life_child) {
-                        get_template_part('template-parts/navigation/tab-menu', null, array(
-                            'current_category' => $current_category->term_id,
-                            'parent_category' => $main_category->term_id
-                        ));
-                        
-                        // WP_Query 인수 설정 (현재 카테고리 및 하위 카테고리 포함)
-                        $args = array(
-                            'tax_query' => array(
-                                array(
-                                    'taxonomy' => 'category',
-                                    'field'    => 'term_id',
-                                    'terms'    => $current_category->term_id,
-                                    'include_children' => true,
-                                ),
-                            ),
-                            'posts_per_page' => 5,
-                            'orderby' => 'date',
-                            'order' => 'DESC',
-                            'paged' => get_query_var('paged') ? get_query_var('paged') : 1
-                        );
-                        
-                        // 새로운 쿼리 실행
-                        $custom_query = new WP_Query($args);
-                        
-                        // 리스트형 레이아웃 불러오기
-                        get_template_part('template-parts/category/style', 'list', array(
-                            'category_slug' => $current_category->slug,
-                            'custom_query' => $custom_query
-                        ));
-                        
-                        // 페이지네이션
-                        echo '<div class="apple-pagination">';
-                        echo paginate_links(array(
-                            'base' => str_replace(999999999, '%#%', esc_url(get_pagenum_link(999999999))),
-                            'format' => '?paged=%#%',
-                            'current' => max(1, get_query_var('paged')),
-                            'total' => $custom_query->max_num_pages,
-                            'prev_text' => '<span class="prev-icon">←</span> 이전',
-                            'next_text' => '다음 <span class="next-icon">→</span>',
-                            'mid_size' => 2,
-                            'end_size' => 1,
-                        ));
-                        echo '</div>';
-                        
-                        // 쿼리 초기화
-                        wp_reset_postdata();
-                    } else {
-                        // 일반 카테고리인 경우 기본 탭 메뉴 표시
-                        if ($current_category->parent == 0) {
-                            get_template_part('template-parts/navigation/tab-menu', null, array(
-                                'current_category' => $current_category->term_id,
-                                'parent_category' => $current_category->term_id
-                            ));
-                        }
-                        
-                        // 현재 페이지 번호 가져오기
-                        $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-                        
-                        // 표시 스타일 가져오기 (기본값: list)
-                        $display_style = get_term_meta($current_category->term_id, 'archive_style', true);
-                        $display_style = $display_style ? $display_style : 'list';
-                        
-                        // 해당 스타일의 템플릿 로드
-                        get_template_part('template-parts/category/style', $display_style);
-                        
-                        // 페이지네이션
-                        echo '<div class="apple-pagination">';
+                    <section class="category-posts">
+                        <div class="post-grid">
+                            <?php while (have_posts()) : the_post(); ?>
+                                <article class="post-card">
+                                    <a href="<?php the_permalink(); ?>" class="post-link">
+                                        <div class="thumbnail">
+                                            <?php if (has_post_thumbnail()) {
+                                                the_post_thumbnail('medium');
+                                            } else {
+                                                echo '<div class="no-thumbnail"></div>';
+                                            } ?>
+                                        </div>
+                                        <div class="content">
+                                            <h2 class="title"><?php the_title(); ?></h2>
+                                            <time class="date" datetime="<?php echo get_the_date('c'); ?>"><?php echo get_the_date('Y.m.d'); ?></time>
+                                        </div>
+                                    </a>
+                                </article>
+                            <?php endwhile; ?>
+                        </div>
+                    </section>
+
+                    <div class="apple-pagination">
+                        <?php
                         the_posts_pagination(array(
-                            'prev_text' => '<span class="prev-icon">←</span> 이전',
-                            'next_text' => '다음 <span class="next-icon">→</span>',
+                            'prev_text' => '<span class="prev-icon">&larr;</span> 이전',
+                            'next_text' => '다음 <span class="next-icon">&rarr;</span>',
                             'mid_size' => 2,
                             'end_size' => 1,
                             'screen_reader_text' => ' ',
                         ));
-                        echo '</div>';
-                    }
-                    ?>
+                        ?>
+                    </div>
+
                 <?php else : ?>
                     <div class="no-results">
                         <h2>게시물이 없습니다</h2>
-                        <p>아직 이 카테고리에 게시물이 없습니다.</p>
+                        <p>이 카테고리에 등록된 글이 없습니다.</p>
                     </div>
                 <?php endif; ?>
             </div>
@@ -143,113 +80,119 @@ get_header(); ?>
 </div>
 
 <style>
-/* 애플 스타일 히어로 섹션 */
-.apple-hero {
-    padding: 120px 20px 40px;
+/* ❯ 카테고리 히어로 */
+.category-hero {
+    padding: 100px 20px 40px;
+    background: #f9f9fb;
     text-align: center;
-    background-color: #fff;
 }
-
-.apple-hero-container {
-    max-width: 800px;
-    margin: 0 auto;
+.breadcrumb {
+    text-align: left;
+    font-size: 14px;
+    margin-bottom: 20px;
+    color: #999;
 }
-
-.apple-hero-title {
-    font-size: 56px;
-    line-height: 1.1;
+.breadcrumb a {
+    color: #6e6e73;
+    text-decoration: none;
+}
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+.category-title {
+    font-size: 48px;
     font-weight: 700;
     color: #1d1d1f;
-    margin-bottom: 20px;
-    letter-spacing: -0.015em;
 }
-
-.apple-hero-description {
-    font-size: 21px;
-    line-height: 1.5;
-    font-weight: 400;
+.category-description {
+    margin-top: 20px;
+    font-size: 18px;
     color: #6e6e73;
-    max-width: 700px;
-    margin: 0 auto;
 }
 
-/* 애플 스타일 페이지네이션 */
+/* ❯ 게시물 카드 */
+.category-posts {
+    padding: 60px 0;
+}
+.post-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+.post-card {
+    background: #f5f5f7;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: 0.3s;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+.post-card:hover {
+    transform: translateY(-5px);
+}
+.thumbnail img, .no-thumbnail {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    background: #d1d1d6;
+}
+.content {
+    padding: 20px;
+}
+.title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+.date {
+    font-size: 14px;
+    color: #6e6e73;
+}
+
+/* ❯ 페이지네이션 */
 .apple-pagination {
     margin: 40px 0;
     text-align: center;
-    font-size: 15px;
 }
-
 .apple-pagination .page-numbers {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     margin: 0 4px;
     padding: 8px 12px;
+    font-size: 15px;
     color: #1d1d1f;
     text-decoration: none;
     border-radius: 50px;
-    transition: all 0.2s ease;
+    transition: all 0.2s;
 }
-
-.apple-pagination a.page-numbers:hover {
-    background-color: rgba(0, 0, 0, 0.05);
+.apple-pagination .page-numbers:hover {
+    background: #eee6ff;
+    color: #6E45E2;
 }
-
 .apple-pagination .page-numbers.current {
-    background-color: #000;
+    background: #6E45E2;
     color: #fff;
 }
-
-.apple-pagination .prev-icon,
-.apple-pagination .next-icon {
+.apple-pagination .prev-icon, .apple-pagination .next-icon {
     font-size: 14px;
-    display: inline-block;
-    margin: 0 2px;
-}
-
-.apple-pagination .nav-links {
-    display: inline-flex;
-    align-items: center;
 }
 
 @media (max-width: 768px) {
-    .apple-hero {
-        padding: 80px 20px 30px;
+    .category-title {
+        font-size: 36px;
     }
-    
-    .apple-hero-title {
-        font-size: 40px;
-    }
-    
-    .apple-hero-description {
-        font-size: 18px;
-    }
-    
-    .apple-pagination .page-numbers {
-        padding: 6px 10px;
+    .post-grid {
+        gap: 20px;
     }
 }
-
 @media (max-width: 480px) {
-    .apple-hero {
-        padding: 60px 20px 20px;
+    .category-title {
+        font-size: 28px;
     }
-    
-    .apple-hero-title {
-        font-size: 32px;
-    }
-    
-    .apple-hero-description {
-        font-size: 16px;
-    }
-    
-    .apple-pagination .page-numbers {
-        padding: 6px 10px;
-        font-size: 14px;
-        margin: 0 2px;
+    .thumbnail img, .no-thumbnail {
+        height: 180px;
     }
 }
 </style>
 
-<?php get_footer(); ?> 
+<?php get_footer(); ?>
