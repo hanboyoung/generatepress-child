@@ -17,11 +17,8 @@ get_header(); ?>
     
     // 현재 카테고리의 조상 카테고리 확인 (saving-life의 하위 카테고리인지 체크)
     $is_saving_life_child = false;
-<<<<<<< HEAD
     $saving_life_category = get_category_by_slug('news');
-=======
     $saving_life_category = get_category_by_slug('saving-life');
->>>>>>> c67b8701cb5503dba20b9d48cacd87dac3637a20
     
     if ($saving_life_category) {
         if ($current_category->term_id == $saving_life_category->term_id) {
@@ -35,13 +32,9 @@ get_header(); ?>
             }
         }
     }
-<<<<<<< HEAD
 
     // 공통 히어로 템플릿 호출
     get_template_part('template-parts/hero');
-    ?>
-    
-=======
     ?>
     
     <!-- 애플 스타일 히어로 섹션 -->
@@ -54,7 +47,6 @@ get_header(); ?>
         </div>
     </section>
 
->>>>>>> c67b8701cb5503dba20b9d48cacd87dac3637a20
     <div id="primary" class="content-area">
         <main id="main" class="site-main">
             <div class="container">
@@ -67,7 +59,6 @@ get_header(); ?>
                             'parent_category' => $main_category->term_id
                         ));
                         
-<<<<<<< HEAD
                         // WP_Query 인수 설정 (현재 카테고리 및 하위 카테고리 포함)
                         $args = array(
                             'tax_query' => array(
@@ -78,13 +69,7 @@ get_header(); ?>
                                     'include_children' => true,
                                 ),
                             ),
-                            'posts_per_page' => 5, // 한 페이지에 5개의 포스트
-=======
-                        // WP_Query 인수 설정
-                        $args = array(
-                            'cat' => $current_category->term_id,
-                            'posts_per_page' => 10, // 한 페이지에 10개의 포스트
->>>>>>> c67b8701cb5503dba20b9d48cacd87dac3637a20
+                            'posts_per_page' => 5,
                             'orderby' => 'date',
                             'order' => 'DESC',
                             'paged' => get_query_var('paged') ? get_query_var('paged') : 1
@@ -95,11 +80,7 @@ get_header(); ?>
                         
                         // 리스트형 레이아웃 불러오기
                         get_template_part('template-parts/category/style', 'list', array(
-<<<<<<< HEAD
-                            'category_slug' => 'news',
-=======
-                            'category_slug' => 'saving-life',
->>>>>>> c67b8701cb5503dba20b9d48cacd87dac3637a20
+                            'category_slug' => $current_category->slug,
                             'custom_query' => $custom_query
                         ));
                         
@@ -161,8 +142,6 @@ get_header(); ?>
     </div>
 </div>
 
-<<<<<<< HEAD
-=======
 <style>
 /* 애플 스타일 히어로 섹션 */
 .apple-hero {
@@ -273,5 +252,4 @@ get_header(); ?>
 }
 </style>
 
->>>>>>> c67b8701cb5503dba20b9d48cacd87dac3637a20
 <?php get_footer(); ?> 

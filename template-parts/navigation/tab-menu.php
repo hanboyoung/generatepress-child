@@ -20,7 +20,6 @@ $categories = get_categories(array(
 ));
 
 ?>
-<<<<<<< HEAD
 <style>
 /* 탭 메뉴 스타일 */
 .category-tab-menu {
@@ -123,29 +122,3 @@ $categories = get_categories(array(
         </ul>
     </div>
 </nav> 
-=======
-<!-- 탭 메뉴 -->
-<div class="tab-navigation">
-    <div class="tab-container">
-        <div class="tab-menu">
-            <!-- 전체보기 탭 -->
-            <a href="<?php echo esc_url(get_category_link($parent_category)); ?>" 
-               class="tab-item <?php echo ($current_category == $parent_category) ? 'active' : ''; ?>">
-                전체보기
-                <?php $post_count = get_category($parent_category)->count; ?>
-                <span class="post-count"><?php echo $post_count; ?></span>
-            </a>
-            
-            <?php foreach ($categories as $category) : 
-                $is_active = ($current_category == $category->term_id) ? 'active' : '';
-            ?>
-                <a href="<?php echo esc_url(get_category_link($category->term_id)); ?>" 
-                   class="tab-item <?php echo esc_attr($is_active); ?>">
-                    <?php echo esc_html($category->name); ?>
-                    <span class="post-count"><?php echo $category->count; ?></span>
-                </a>
-            <?php endforeach; ?>
-        </div>
-    </div>
-</div> 
->>>>>>> c67b8701cb5503dba20b9d48cacd87dac3637a20

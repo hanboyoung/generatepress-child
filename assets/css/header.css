@@ -1,5 +1,4 @@
-/* ==================================================================================
- * ⚠️ 경고: 이 파일은 현재 프로덕션에서 사용 중인 완성된 버전입니다!
+ /* * ⚠️ 경고: 이 파일은 현재 프로덕션에서 사용 중인 완성된 버전입니다!
  * 🚫 직접 수정하지 마세요!
  * 
  * 최종 수정일: 2024-04-18
@@ -9,9 +8,8 @@
  * 1. 반드시 관리자에게 문의해주세요
  * 2. 승인 후 새로운 파일을 생성하여 작업을 진행합니다
  * 3. 테스트 완료 후 관리자 검토를 거쳐 적용됩니다
- * ================================================================================== */
 
-/* 헤더 기본 변수 */
+헤더 기본 변수 */
 :root {
     --header-bg: #ffffff;
     --header-text: #333333;
@@ -84,15 +82,12 @@
     color: var(--header-text);
     text-decoration: none;
     font-weight: 500;
-<<<<<<< HEAD
     font-size: 16px;
     padding: 8px 0;
     transition: color 0.3s ease;
     display: inline-block;
     position: relative;
-=======
     transition: color 0.3s ease;
->>>>>>> c67b8701cb5503dba20b9d48cacd87dac3637a20
 }
 
 .nav-menu a:hover, .header-menu a:hover {
@@ -113,9 +108,7 @@
 .header-menu .current-menu-item > a::after,
 .nav-menu .current-menu-ancestor > a::after, 
 .header-menu .current-menu-ancestor > a::after {
-<<<<<<< HEAD
     content: none !important;
-=======
     content: '';
     position: absolute;
     bottom: -5px;
@@ -124,7 +117,6 @@
     height: 2px;
     background-color: var(--purple-base);
     border-radius: 2px;
->>>>>>> c67b8701cb5503dba20b9d48cacd87dac3637a20
 }
 
 /* Menu Toggle Button */
@@ -326,7 +318,6 @@ header.site-header .menu-item > a {
     white-space: nowrap !important;
 }
 
-<<<<<<< HEAD
 /* 호버 효과 개선 */
 header.site-header .menu-item a:hover,
 header.site-header .menu-item > a:hover {
@@ -343,8 +334,6 @@ header.site-header .current-menu-item > a {
     box-shadow: var(--button-hover-shadow) !important;
 }
 
-=======
->>>>>>> c67b8701cb5503dba20b9d48cacd87dac3637a20
 /* 모바일에서는 다른 스타일 적용 */
 @media (max-width: 768px) {
     header.site-header .header-menu {

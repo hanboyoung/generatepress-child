@@ -85,23 +85,10 @@ get_header(); ?>
                             'category_slug' => 'news',
                             'custom_query' => $custom_query
                         ));
-                        
-                        // 페이지네이션
-                        if ($custom_query->max_num_pages > 1) :
-                            echo '<div class="pagination">';
-                            echo paginate_links(array(
-                                'base' => str_replace(999999999, '%#%', esc_url(get_pagenum_link(999999999))),
-                                'format' => '?paged=%#%',
-                                'current' => max(1, $paged),
-                                'total' => $custom_query->max_num_pages,
-                                'prev_text' => '',
-                                'next_text' => '',
-                                'mid_size' => 2,
-                                'end_size' => 1,
-                            ));
-                            echo '</div>';
-                        endif;
 
+                        
+
+                        
                         // 쿼리 초기화
                         wp_reset_postdata();
                         ?>

@@ -73,6 +73,7 @@ if ($card_query->have_posts()) : ?>
                 'query' => $card_query
             ));
             ?>
+            
         </div>
     </div>
 

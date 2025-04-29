@@ -127,7 +127,7 @@ wp_enqueue_script('scroll-animations', get_stylesheet_directory_uri() . '/assets
             <h2><?php echo esc_html($category_data['title']); ?></h2>
             <p class="section-description"><?php echo esc_html($category_data['description']); ?></p>
           </div>
-          <a href="<?php echo esc_url(get_category_link($cat_id)); ?>" class="view-all-link">모두 보기 <span class="arrow">→</span></a>
+          <a href="<?php echo esc_url(get_category_link($tag_id)); ?>" class="view-all-link">모두 보기 <span class="arrow">→</span></a>
         </div>
         
         <div class="posts-row">
@@ -143,6 +143,8 @@ wp_enqueue_script('scroll-animations', get_stylesheet_directory_uri() . '/assets
                     <div class="no-thumbnail"></div>
                   <?php endif; ?>
                 </div>
+
+                
                 <div class="card-content">
                   <h3 class="card-title"><?php the_title(); ?></h3>
                   <div class="card-excerpt"><?php echo wp_trim_words(get_the_excerpt(), 15); ?></div>
@@ -164,7 +166,7 @@ wp_enqueue_script('scroll-animations', get_stylesheet_directory_uri() . '/assets
     endforeach;
     ?>
 
-    <!-- 구독 섹션 -->
+    <!-- 구독 섹션
     <section class="subscription-section">
       <div class="section-container">
         <div class="subscription-content">
@@ -176,7 +178,7 @@ wp_enqueue_script('scroll-animations', get_stylesheet_directory_uri() . '/assets
           </form>
         </div>
       </div>
-    </section>
+    </section> -->
 
   </main>
 </div>

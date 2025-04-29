@@ -15,13 +15,10 @@ function gpc_enqueue_child_styles() {
     // 메인 스타일, 항상 적용 (부모 테마 스타일 의존성 추가)
     wp_enqueue_style('gpc-style', $base_uri . '/style.css', array('generate-style'), filemtime($base_dir . '/style.css'));
 
-<<<<<<< HEAD
     // 공통 컴포넌트 (페이지 제외)
-    $css_components = ['header', 'hero', 'card', 'image', 'pagination', 'tag', 'button', 'list'];
-=======
+    $css_components = ['header', 'hero', 'card', 'image', 'pagination', 'tag', 'button', 'list', 'tab-menu'];
     // 공통 컴포넌트 (항상 불러올 것만)
     $css_components = ['header', 'hero', 'card', 'image', 'page', 'pagination', 'tag', 'button', 'list'];
->>>>>>> c67b8701cb5503dba20b9d48cacd87dac3637a20
     foreach ($css_components as $component) {
         $path = "/assets/css/{$component}.css";
         if (file_exists($base_dir . $path)) {
@@ -29,8 +26,6 @@ function gpc_enqueue_child_styles() {
         }
     }
     
-<<<<<<< HEAD
-=======
     // 카테고리 페이지에서만 탭 메뉴 스타일 로드
     if (is_category()) {
         $tab_menu_path = "/assets/css/tab-menu.css";
@@ -39,7 +34,6 @@ function gpc_enqueue_child_styles() {
         }
     }
     
->>>>>>> c67b8701cb5503dba20b9d48cacd87dac3637a20
     // 페이지 전용: page-about.css 
     if (is_page()) {
         $slug = get_post_field('post_name', get_post());
@@ -243,7 +237,6 @@ function get_popular_posts_by_likes($count = 5) {
     
     return new WP_Query($args);
 }
-<<<<<<< HEAD
 
 // // 슬러그 자동 최적화 (신규만 적용)
 // require_once get_stylesheet_directory() . '/inc/customizer/auto-slug.php';
@@ -280,5 +273,31 @@ function gpc_register_category_sidebar() {
     ));
 }
 add_action('widgets_init', 'gpc_register_category_sidebar');
-=======
->>>>>>> c67b8701cb5503dba20b9d48cacd87dac3637a20
+
+// For news category and its subcategories, use category-news.php template
+add_filter('category_template', 'gpc_use_news_template');
+function gpc_use_news_template($template) {
+    if (!is_category()) {
+        return $template;
+    }
+    $news_cat = get_category_by_slug('news');
+    $current_cat = get_queried_object();
+    if ($news_cat && ($current_cat->term_id === $news_cat->term_id || in_array($news_cat->term_id, get_ancestors($current_cat->term_id, 'category')))) {
+        $new_template = locate_template('category-news.php');
+        if ($new_template) {
+            return $new_template;
+        }
+    }
+    return $template;
+}
+
+// Enqueue tab menu styles on category pages
+add_action('wp_enqueue_scripts', function() {
+    if (is_category()) {
+        $uri = get_stylesheet_directory_uri() . '/assets/css/tab-menu.css';
+        $dir = get_stylesheet_directory() . '/assets/css/tab-menu.css';
+        if (file_exists($dir)) {
+            wp_enqueue_style('gpc-tab-menu', $uri, array('gpc-style'), filemtime($dir));
+        }
+    }
+}, 25);
