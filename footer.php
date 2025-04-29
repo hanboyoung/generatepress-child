@@ -1,65 +1,25 @@
 <?php
 /**
- * The template for displaying the footer.
+ * 깔끔한 Footer 템플릿
  *
- * @package GeneratePress
+ * @package GeneratePress-child
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
+	exit; // 직접 접근 방지
 }
 ?>
 
+	</div><!-- #content -->
+</div><!-- #page -->
+
+<footer id="colophon" class="site-footer">
+	<div class="container">
+		<p class="footer-text">&copy; <?php echo date('Y'); ?> Han Bo Young. All rights reserved.</p>
 	</div>
-</div>
+</footer>
 
-<?php
-/**
- * generate_before_footer hook.
- *
- * @since 0.1
- */
-do_action( 'generate_before_footer' );
-?>
-
-<div <?php generate_do_attr( 'footer' ); ?>>
-	<?php
-	/**
-	 * generate_before_footer_content hook.
-	 *
-	 * @since 0.1
-	 */
-	do_action( 'generate_before_footer_content' );
-
-	/**
-	 * generate_footer hook.
-	 *
-	 * @since 1.3.42
-	 *
-	 * @hooked generate_construct_footer_widgets - 5
-	 * @hooked generate_construct_footer - 10
-	 */
-	do_action( 'generate_footer' );
-
-	/**
-	 * generate_after_footer_content hook.
-	 *
-	 * @since 0.1
-	 */
-	do_action( 'generate_after_footer_content' );
-	?>
-</div>
-
-<?php
-/**
- * generate_after_footer hook.
- *
- * @since 2.1
- */
-do_action( 'generate_after_footer' );
-
-wp_footer();
-?>
+<?php wp_footer(); ?>
 
 </body>
 </html>

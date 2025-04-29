@@ -10,18 +10,18 @@ License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: generatepress-child
 */
-
+/* 
  * ⚠️ 경고: 이 파일은 현재 프로덕션에서 사용 중인 완성된 버전입니다!
  * 🚫 직접 수정하지 마세요!
  * 
- * 최종 수정일: 2024-04-18
+ * 최종 수정일: 2025-04-18
  * 버전: 1.0.0
  * 
  * 새로운 스타일이 필요한 경우:
  * 1. 이 파일을 복사하여 새로운 이름으로 저장
  * 2. 새로운 파일에서 작업을 진행해 주세요
 
-   기본 스타일 오버라이드
+   기본 스타일 오버라이드 */
 
 /* 기본 색상 변수 */
 :root {

@@ -1,13 +1,11 @@
 <?php
 /**
- * 프론트 페이지 템플릿
+ * 애플 스타일 랜딩페이지 (업그레이드 버전)
  *
  * @package GeneratePress-child
  */
 
 get_header();
-
-// 스크롤 애니메이션 스크립트 추가
 wp_enqueue_script('scroll-animations', get_stylesheet_directory_uri() . '/assets/js/scroll-animations.js', array(), '1.0.0', true);
 ?>
 
@@ -17,10 +15,10 @@ wp_enqueue_script('scroll-animations', get_stylesheet_directory_uri() . '/assets
     <!-- Hero Section -->
     <section class="hero-section">
       <div class="hero-content">
-        <h1 class="hero-title animate-on-scroll">사람 살리는 기획자.</h1>
-        <p class="hero-description animate-on-scroll">
-          프리랜서 영상제작자 미혼 엄마의 세상인 아들과 함께<br>
-          우리가 경험하는 ✨기적✨을 기록 합니다.
+        <h1 class="hero-title animate-on-scroll">사람 살리는 기획자</h1>
+        <p class="hero-subtitle animate-on-scroll">
+          아들과 함께 살아가는 프리랜서 미혼 엄마.<br>
+          우리가 경험하는 기적을 기록합니다.
         </p>
         <div class="hero-buttons">
           <a href="#latest-posts" class="hero-button hero-button-primary animate-on-scroll">최신 스토리 보기</a>
@@ -29,159 +27,103 @@ wp_enqueue_script('scroll-animations', get_stylesheet_directory_uri() . '/assets
       </div>
     </section>
 
-    <!-- 최신 업데이트 섹션 -->
+    <!-- 최신 포스트 섹션 -->
     <section class="apple-section latest-updates" id="latest-posts">
       <div class="section-container">
         <div class="section-header">
           <h2>최신 업데이트</h2>
-          <a href="<?php echo esc_url(home_url('/archive/')); ?>" class="view-all-link">모두 보기 <span class="arrow">→</span></a>
+          <a href="<?php echo esc_url(home_url('/archive/')); ?>" class="view-all-link">모두 보기 →</a>
         </div>
-        
+
         <div class="featured-grid">
           <?php
-          // 최신 포스트 3개 가져오기
           $args = array(
             'post_type' => 'post',
             'posts_per_page' => 3,
             'meta_query' => array(
               array(
-                'key'     => '_thumbnail_id',
+                'key' => '_thumbnail_id',
                 'compare' => 'EXISTS'
               )
             )
           );
-          
           $latest_query = new WP_Query($args);
-          
           if ($latest_query->have_posts()) :
-            $count = 0;
-            while ($latest_query->have_posts()) : $latest_query->the_post();
-              $count++;
-              $is_featured = ($count === 1);
-              $post_classes = $is_featured ? 'post-card featured' : 'post-card';
-              ?>
-              
-              <article class="<?php echo $post_classes; ?> animate-on-scroll" style="animation-delay: <?php echo $count * 0.1; ?>s">
+            while ($latest_query->have_posts()) : $latest_query->the_post(); ?>
+              <article class="post-card animate-on-scroll">
                 <a href="<?php the_permalink(); ?>" class="card-link">
                   <div class="card-image">
-                    <?php if (has_post_thumbnail()) : ?>
-                      <?php the_post_thumbnail('large'); ?>
-                    <?php else : ?>
-                      <div class="no-thumbnail"></div>
-                    <?php endif; ?>
+                    <?php the_post_thumbnail('large'); ?>
                   </div>
                   <div class="card-content">
-                    <div class="card-label">최신 업데이트</div>
+                    <div class="card-label">최신</div>
                     <h3 class="card-title"><?php the_title(); ?></h3>
-                    <div class="card-date"><?php echo get_the_date('Y년 n월 j일'); ?></div>
+                    <div class="card-date"><?php echo get_the_date(); ?></div>
                   </div>
                 </a>
               </article>
-              
-            <?php endwhile;
-            wp_reset_postdata();
-          endif;
-          ?>
+          <?php endwhile; wp_reset_postdata(); endif; ?>
         </div>
       </div>
     </section>
 
-    <!-- 인기 카테고리 섹션 -->
+    <!-- 카테고리 강조 섹션 -->
     <?php
-    // 표시할 카테고리들
     $featured_categories = array(
-      array(
-        'slug' => 'saving-life',
-        'title' => '세상 이야기',
-        'description' => '사람 살리는 기획자의 새로운 이야기를 만나보세요.',
-        'color' => '#5856d6'
-      ),
-      array(
-        'slug' => 'ai',
-        'title' => 'AI 자료실',
-        'description' => '인공지능 관련 최신 연구와 유용한 정보들을 공유합니다.',
-        'color' => '#34c759'
-      )
+      array('slug' => 'saving-life', 'title' => '세상 이야기', 'desc' => '사람 살리는 기획자의 이야기', 'color' => '#6E45E2'),
+      array('slug' => 'ai', 'title' => 'AI 자료실', 'desc' => '유용한 자동화 & 인공지능 노트', 'color' => '#8A67E8')
     );
-    
-    foreach ($featured_categories as $category_data) :
-      $category = get_category_by_slug($category_data['slug']);
-      
-      if ($category) :
-        $cat_id = $category->term_id;
-        $cat_args = array(
-          'post_type' => 'post',
-          'posts_per_page' => 4,
-          'cat' => $cat_id
-        );
-        
-        $category_query = new WP_Query($cat_args);
-        
-        if ($category_query->have_posts()) :
-    ?>
-    
-    <section class="apple-section category-section" style="--section-color: <?php echo $category_data['color']; ?>">
-      <div class="section-container">
-        <div class="section-header">
-          <div class="header-content">
-            <h2><?php echo esc_html($category_data['title']); ?></h2>
-            <p class="section-description"><?php echo esc_html($category_data['description']); ?></p>
+
+    foreach ($featured_categories as $cat) {
+      $term = get_category_by_slug($cat['slug']);
+      if (!$term) continue;
+
+      $query = new WP_Query(array(
+        'post_type' => 'post',
+        'posts_per_page' => 4,
+        'cat' => $term->term_id
+      ));
+
+      if ($query->have_posts()) : ?>
+        <section class="category-section" style="--section-color: <?php echo esc_attr($cat['color']); ?>">
+          <div class="section-container">
+            <div class="section-header">
+              <div>
+                <h2><?php echo esc_html($cat['title']); ?></h2>
+                <p class="section-description"><?php echo esc_html($cat['desc']); ?></p>
+              </div>
+              <a href="<?php echo esc_url(get_category_link($term->term_id)); ?>" class="view-all-link">전체 보기 →</a>
+            </div>
+            <div class="posts-row">
+              <?php while ($query->have_posts()) : $query->the_post(); ?>
+                <article class="post-card horizontal animate-on-scroll">
+                  <a href="<?php the_permalink(); ?>" class="card-link">
+                    <div class="card-image">
+                      <?php if (has_post_thumbnail()) {
+                        the_post_thumbnail('medium');
+                      } else {
+                        echo '<div class="no-thumbnail"></div>';
+                      } ?>
+                    </div>
+                    <div class="card-content">
+                      <h3 class="card-title"><?php the_title(); ?></h3>
+                      <div class="card-date"><?php echo get_the_date(); ?></div>
+                    </div>
+                  </a>
+                </article>
+              <?php endwhile; ?>
+            </div>
           </div>
-          <a href="<?php echo esc_url(get_category_link($tag_id)); ?>" class="view-all-link">모두 보기 <span class="arrow">→</span></a>
-        </div>
-        
-        <div class="posts-row">
-          <?php
-          while ($category_query->have_posts()) : $category_query->the_post();
-          ?>
-            <article class="post-card horizontal animate-on-scroll">
-              <a href="<?php the_permalink(); ?>" class="card-link">
-                <div class="card-image">
-                  <?php if (has_post_thumbnail()) : ?>
-                    <?php the_post_thumbnail('medium'); ?>
-                  <?php else : ?>
-                    <div class="no-thumbnail"></div>
-                  <?php endif; ?>
-                </div>
-
-                
-                <div class="card-content">
-                  <h3 class="card-title"><?php the_title(); ?></h3>
-                  <div class="card-excerpt"><?php echo wp_trim_words(get_the_excerpt(), 15); ?></div>
-                  <div class="card-date"><?php echo get_the_date('Y년 n월 j일'); ?></div>
-                </div>
-              </a>
-            </article>
-          <?php
-          endwhile;
-          wp_reset_postdata();
-          ?>
-        </div>
-      </div>
-    </section>
-    
+        </section>
     <?php
-        endif;
+        wp_reset_postdata();
       endif;
-    endforeach;
+    }
     ?>
-
-    <!-- 구독 섹션
-    <section class="subscription-section">
-      <div class="section-container">
-        <div class="subscription-content">
-          <h2>소식 받아보기</h2>
-          <p>최신 이야기와 가치있는 정보를 이메일로 받아보세요.</p>
-          <form class="subscription-form" action="#" method="post">
-            <input type="email" placeholder="이메일 주소" required>
-            <button type="submit">구독하기</button>
-          </form>
-        </div>
-      </div>
-    </section> -->
 
   </main>
 </div>
+
 
 <style>
 :root {

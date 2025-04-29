@@ -1,40 +1,30 @@
 <?php
 /**
- * GeneratePress 차일드 테마 함수 (정리된 버전)
+ * GeneratePress 차일드 테마 함수 정리
  */
 
 if (!defined('ABSPATH')) exit; // 직접 접근 방지
 
 /**
- * 자식 테마 스타일 등록 (컴포넌트 기반)
+ * 스타일 및 스크립트 등록
  */
 function gpc_enqueue_child_styles() {
     $base_uri = get_stylesheet_directory_uri();
     $base_dir = get_stylesheet_directory();
-    
-    // 메인 스타일, 항상 적용 (부모 테마 스타일 의존성 추가)
+
+    // 메인 스타일 always
     wp_enqueue_style('gpc-style', $base_uri . '/style.css', array('generate-style'), filemtime($base_dir . '/style.css'));
 
-    // 공통 컴포넌트 (페이지 제외)
-    $css_components = ['header', 'hero', 'card', 'image', 'pagination', 'tag', 'button', 'list', 'tab-menu'];
-    // 공통 컴포넌트 (항상 불러올 것만)
-    $css_components = ['header', 'hero', 'card', 'image', 'page', 'pagination', 'tag', 'button', 'list'];
-    foreach ($css_components as $component) {
+    // 공통 CSS 컴포넌트
+    $components = ['header', 'hero', 'card', 'image', 'page', 'pagination', 'tag', 'button', 'list', 'category'];
+    foreach ($components as $component) {
         $path = "/assets/css/{$component}.css";
         if (file_exists($base_dir . $path)) {
             wp_enqueue_style("gpc-{$component}-style", $base_uri . $path, ['gpc-style'], filemtime($base_dir . $path));
         }
     }
-    
-    // 카테고리 페이지에서만 탭 메뉴 스타일 로드
-    if (is_category()) {
-        $tab_menu_path = "/assets/css/tab-menu.css";
-        if (file_exists($base_dir . $tab_menu_path)) {
-            wp_enqueue_style("gpc-tab-menu-style", $base_uri . $tab_menu_path, ['gpc-style'], filemtime($base_dir . $tab_menu_path));
-        }
-    }
-    
-    // 페이지 전용: page-about.css 
+
+    // 특정 페이지 전용 스타일
     if (is_page()) {
         $slug = get_post_field('post_name', get_post());
         $path = "/assets/css/page-{$slug}.css";
@@ -43,7 +33,7 @@ function gpc_enqueue_child_styles() {
         }
     }
 
-    // 카테고리 전용: category-news.css
+    // 특정 카테고리 전용 스타일
     if (is_category()) {
         $category = get_queried_object();
         if (isset($category->slug)) {
@@ -53,34 +43,28 @@ function gpc_enqueue_child_styles() {
                 wp_enqueue_style("gpc-category-{$slug}-style", $base_uri . $path, ['gpc-style'], filemtime($base_dir . $path));
             }
         }
+
+        // 카테고리 전용 탭 메뉴 스타일
+        $tab_menu_path = "/assets/css/tab-menu.css";
+        if (file_exists($base_dir . $tab_menu_path)) {
+            wp_enqueue_style("gpc-tab-menu", $base_uri . $tab_menu_path, ['gpc-style'], filemtime($base_dir . $tab_menu_path));
+        }
     }
 }
 add_action('wp_enqueue_scripts', 'gpc_enqueue_child_styles', 20);
 
 /**
- * 부모 테마 주요 액션/필터 제거 (필요한 경우만 유지)
+ * GeneratePress 기본 후크 제거
  */
 function gpc_clean_parent_hooks() {
-    // 이미지 관련 훅만 제거 (반응형 관련 훅은 유지)
     remove_action('generate_after_entry_header', 'generate_post_image', 10);
     remove_action('generate_before_content', 'generate_featured_page_header', 10);
-    
-    // 푸터 크레딧 제거
     remove_action('generate_credits', 'generate_add_footer_info', 10);
-    
-    // 중요: 반응형 관련 액션/필터는 제거하지 않음
 }
 add_action('init', 'gpc_clean_parent_hooks');
 
 /**
- * 메뉴 출력용 디버깅 제거 (운영용에는 비활성화)
- * - wp_debug_menu_items()
- * - wp_add_menu_debug_script()
- * - debug_menu_setup()
- */
-
-/**
- * 썸네일 이미지 사이즈 정의
+ * 이미지 사이즈 등록
  */
 function gpc_custom_image_sizes() {
     add_image_size('card-thumb', 600, 400, true);
@@ -90,7 +74,7 @@ function gpc_custom_image_sizes() {
 add_action('after_setup_theme', 'gpc_custom_image_sizes');
 
 /**
- * 관리자 페이지에서 페이지 템플릿 선택 허용
+ * 페이지 템플릿 기능 활성화
  */
 function gpc_enable_page_templates() {
     add_post_type_support('page', 'page-attributes');
@@ -98,7 +82,7 @@ function gpc_enable_page_templates() {
 add_action('init', 'gpc_enable_page_templates');
 
 /**
- * 관리자바 위치 조정 (프론트에만 적용)
+ * 관리자 바 위치 조정 (프론트엔드 전용)
  */
 function gpc_adminbar_position_fix() {
     if (!is_admin() && is_admin_bar_showing()) {
@@ -107,143 +91,8 @@ function gpc_adminbar_position_fix() {
 }
 add_action('wp_head', 'gpc_adminbar_position_fix');
 
-
 /**
- * 이미지 그리드 스타일시트 등록
- */
-function enqueue_image_grid_styles() {
-    wp_enqueue_style('image-grid-style', get_stylesheet_directory_uri() . '/template-parts/css/image.css', array(), '1.0.0');
-}
-add_action('wp_enqueue_scripts', 'enqueue_image_grid_styles');
-
-/**
- * 반응형 메뉴 스타일 및 스크립트 등록
- */
-function gpc_enqueue_responsive_menu() {
-    // Register styles with dependency on GeneratePress styles
-    wp_enqueue_style(
-        'gpc-responsive-menu',
-        get_stylesheet_directory_uri() . '/assets/css/responsive-menu.css',
-        array('generate-style', 'generate-mobile-style'),
-        filemtime( get_stylesheet_directory() . '/assets/css/responsive-menu.css' )
-    );
-
-    // Register scripts with dependency on GeneratePress navigation
-    wp_enqueue_script(
-        'gpc-mobile-menu',
-        get_stylesheet_directory_uri() . '/assets/js/mobile-menu.js',
-        array('jquery', 'generate-menu'),
-        filemtime( get_stylesheet_directory() . '/assets/js/mobile-menu.js' ),
-        true
-    );
-}
-add_action( 'wp_enqueue_scripts', 'gpc_enqueue_responsive_menu', 20 );
-
-/**
- * GeneratePress 기본 반응형 기능 활성화
- * 부모 테마의 반응형 기능과 동작을 복원합니다.
- */
-function gpc_restore_generatepress_responsive() {
-    // GeneratePress 모바일 네비게이션 스크립트 로드
-    if (!wp_script_is('generate-menu', 'enqueued')) {
-        wp_enqueue_script('generate-menu');
-    }
-    
-    // GeneratePress 모바일 반응형 스타일 로드
-    if (!wp_style_is('generate-mobile-style', 'enqueued')) {
-        wp_enqueue_style('generate-mobile-style');
-    }
-    
-    // 부모 테마의 일부 제거된 기능을 복원
-    add_action('wp_footer', function() {
-        if (function_exists('generate_back_to_top')) {
-            generate_back_to_top();
-        }
-    });
-    
-    // GeneratePress 메뉴 관련 클래스 추가
-    add_filter('body_class', function($classes) {
-        $classes[] = 'nav-aligned-center';
-        $classes[] = 'nav-dropdown-mobile';
-        return $classes;
-    });
-}
-add_action('wp_enqueue_scripts', 'gpc_restore_generatepress_responsive', 100);
-
-/**
- * 좋아요 기능 AJAX 처리
- */
-function post_like_callback() {
-    // 보안 검증
-    check_ajax_referer('like_post_nonce', 'nonce');
-    
-    $post_id = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
-    
-    if ($post_id <= 0) {
-        wp_send_json_error();
-        return;
-    }
-    
-    // 현재 좋아요 수 가져오기
-    $likes = get_post_meta($post_id, 'post_likes', true);
-    if (!$likes) $likes = 0;
-    
-    // 사용자가 이미 좋아요 했는지 확인
-    $already_liked = isset($_COOKIE['post_liked_' . $post_id]);
-    
-    if ($already_liked) {
-        // 좋아요 취소
-        $likes--;
-        $liked = false;
-    } else {
-        // 좋아요 추가
-        $likes++;
-        $liked = true;
-    }
-    
-    // 좋아요 수가 음수가 되지 않도록
-    if ($likes < 0) $likes = 0;
-    
-    // 좋아요 수 업데이트
-    update_post_meta($post_id, 'post_likes', $likes);
-    
-    // 결과 반환
-    wp_send_json_success(array(
-        'likes' => $likes,
-        'liked' => $liked
-    ));
-}
-add_action('wp_ajax_post_like', 'post_like_callback');
-add_action('wp_ajax_nopriv_post_like', 'post_like_callback');
-
-/**
- * 인기 포스트 가져오기 (좋아요 수 기준)
- */
-function get_popular_posts_by_likes($count = 5) {
-    $args = array(
-        'post_type' => 'post',
-        'posts_per_page' => $count,
-        'meta_key' => 'post_likes',
-        'orderby' => 'meta_value_num',
-        'order' => 'DESC',
-        'meta_query' => array(
-            array(
-                'key' => 'post_likes',
-                'value' => '0',
-                'compare' => '>'
-            )
-        )
-    );
-    
-    return new WP_Query($args);
-}
-
-// // 슬러그 자동 최적화 (신규만 적용)
-// require_once get_stylesheet_directory() . '/inc/customizer/auto-slug.php';
-
-add_action('pre_get_posts', 'include_subcategories_in_main_query');
-/**
- * 카테고리 아카이브에 하위 카테고리 포스트도 포함
+ * 카테고리 아카이브에 하위 카테고리 포함
  */
 function include_subcategories_in_main_query($query) {
     if (!is_admin() && $query->is_main_query() && $query->is_category()) {
@@ -251,53 +100,72 @@ function include_subcategories_in_main_query($query) {
         $tax_query = array(
             array(
                 'taxonomy' => 'category',
-                'field'    => 'term_id',
-                'terms'    => $term->term_id,
+                'field' => 'term_id',
+                'terms' => $term->term_id,
                 'include_children' => true,
             ),
         );
         $query->set('tax_query', $tax_query);
     }
 }
+add_action('pre_get_posts', 'include_subcategories_in_main_query');
 
-// Register sidebar for category archive pages
+/**
+ * 카테고리 사이드바 등록
+ */
 function gpc_register_category_sidebar() {
     register_sidebar(array(
-        'name'          => 'Category Archive Sidebar',
-        'id'            => 'category-sidebar',
-        'description'   => 'Widgets displayed on category archive pages.',
+        'name' => 'Category Archive Sidebar',
+        'id' => 'category-sidebar',
+        'description' => '카테고리 아카이브용 사이드바',
         'before_widget' => '<div id="%1$s" class="widget %2$s">',
-        'after_widget'  => '</div>',
-        'before_title'  => '<h2 class="widget-title">',
-        'after_title'   => '</h2>',
+        'after_widget' => '</div>',
+        'before_title' => '<h2 class="widget-title">',
+        'after_title' => '</h2>',
     ));
 }
 add_action('widgets_init', 'gpc_register_category_sidebar');
 
-// For news category and its subcategories, use category-news.php template
-add_filter('category_template', 'gpc_use_news_template');
+/**
+ * 뉴스 카테고리만 템플릿 변경
+ */
 function gpc_use_news_template($template) {
-    if (!is_category()) {
-        return $template;
-    }
+    if (!is_category()) return $template;
+
     $news_cat = get_category_by_slug('news');
     $current_cat = get_queried_object();
     if ($news_cat && ($current_cat->term_id === $news_cat->term_id || in_array($news_cat->term_id, get_ancestors($current_cat->term_id, 'category')))) {
         $new_template = locate_template('category-news.php');
-        if ($new_template) {
-            return $new_template;
-        }
+        if ($new_template) return $new_template;
     }
     return $template;
 }
+add_filter('category_template', 'gpc_use_news_template');
 
-// Enqueue tab menu styles on category pages
-add_action('wp_enqueue_scripts', function() {
-    if (is_category()) {
-        $uri = get_stylesheet_directory_uri() . '/assets/css/tab-menu.css';
-        $dir = get_stylesheet_directory() . '/assets/css/tab-menu.css';
-        if (file_exists($dir)) {
-            wp_enqueue_style('gpc-tab-menu', $uri, array('gpc-style'), filemtime($dir));
-        }
+/**
+ * 모바일 메뉴 스타일/스크립트 등록
+ */
+function gpc_enqueue_responsive_menu() {
+    wp_enqueue_style('gpc-responsive-menu', get_stylesheet_directory_uri() . '/assets/css/responsive-menu.css', array('generate-style', 'generate-mobile-style'), filemtime(get_stylesheet_directory() . '/assets/css/responsive-menu.css'));
+    wp_enqueue_script('gpc-mobile-menu', get_stylesheet_directory_uri() . '/assets/js/mobile-menu.js', array('jquery', 'generate-menu'), filemtime(get_stylesheet_directory() . '/assets/js/mobile-menu.js'), true);
+}
+add_action('wp_enqueue_scripts', 'gpc_enqueue_responsive_menu', 20);
+
+/**
+ * GeneratePress 반응형 기능 복원
+ */
+function gpc_restore_generatepress_responsive() {
+    if (!wp_script_is('generate-menu', 'enqueued')) {
+        wp_enqueue_script('generate-menu');
     }
-}, 25);
+    if (!wp_style_is('generate-mobile-style', 'enqueued')) {
+        wp_enqueue_style('generate-mobile-style');
+    }
+}
+add_action('wp_enqueue_scripts', 'gpc_restore_generatepress_responsive', 100);
+
+// Footer 스타일 추가
+function gpc_enqueue_footer_styles() {
+    wp_enqueue_style('gpc-footer-style', get_stylesheet_directory_uri() . '/assets/css/footer.css', array('gpc-style'), filemtime(get_stylesheet_directory() . '/assets/css/footer.css'));
+}
+add_action('wp_enqueue_scripts', 'gpc_enqueue_footer_styles', 25);
